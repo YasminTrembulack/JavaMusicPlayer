@@ -1,15 +1,26 @@
 package com.yasminm.scenes;
 
+import com.yasminm.model.UserData;
+import com.yasminm.util.HibernateUtil;
+
 import java.net.URL;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 
 public class UserRegistrationSceneController {
     public static Scene CreateScene() throws Exception {
@@ -29,8 +40,87 @@ public class UserRegistrationSceneController {
     protected TextField tfEmail;
 
     @FXML
+    protected PasswordField tfDirectory;
+
+    @FXML
     protected PasswordField pfPassword;
 
     @FXML
+    protected PasswordField pfConfirmPassword;
+
+
+    @FXML
     protected Button btSubmit;
+
+    public String getUsernameInput() {
+        return tfUsername.getText();
+    }
+
+    public String getNameInput() {
+        return tfName.getText();
+    }
+
+    public String getEmailInput() {
+        return tfEmail.getText();
+    }
+
+    public String getDirectoryInput() {
+        return tfDirectory.getText();
+    }
+
+    public String getPasswordInput() {
+        return pfPassword.getText();
+    }
+
+    public String getConfirmPasswordInput() {
+        return pfConfirmPassword.getText();
+    }
+
+    public void registerUser(ActionEvent e) {
+        String password = pfPassword.getText();
+        String confirmPassword = pfConfirmPassword.getText();
+
+        if(!password.equals(confirmPassword)) {
+            Alert alert = new Alert(
+                    AlertType.ERROR,
+                    "Senhas não coincidem!",
+                    ButtonType.OK);
+            alert.showAndWait();
+            return;
+        }
+
+        UserData newUser = new UserData();
+        newUser.setUsername(getUsernameInput());
+        newUser.setName(getNameInput());
+        newUser.setEmail(getEmailInput());
+        newUser.setDirectory(getDirectoryInput());
+        newUser.setPassword(confirmPassword);
+
+        Session session = HibernateUtil
+                .getSessionFactory()
+                .getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+
+        session.save(newUser);
+        transaction.commit();
+
+        Stage crrStage = (Stage) btSubmit
+                .getScene().getWindow();
+            crrStage.close();
+
+        try {
+            Stage stage = new Stage();
+            Scene scene = HomeSceneController.CreateScene(newUser);
+            stage.setScene(scene);
+            stage.show();
+        } 
+        catch (Exception ex) {
+            Alert alert = new Alert(
+                    AlertType.ERROR,
+                    "Erro ao processar a tela. Consulte o apoio de TI",
+                    ButtonType.OK);
+            alert.showAndWait();
+            ex.printStackTrace();
+        }
+    }
 }

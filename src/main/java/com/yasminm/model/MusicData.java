@@ -18,6 +18,12 @@ public class MusicData {
     @Column(name = "Album")
     private String album;
 
+    @Column(name = "DirectoryPath")
+    private String directoryPath;
+
+    @Column(name = "ImagePath")
+    private String imagePath;
+
     public String getTitle() {
         return this.title;
     }
@@ -41,4 +47,22 @@ public class MusicData {
     public void setAlbum(String album) {
         this.album = album;
     }
+
+    public String getdirectoryPath() {
+        return directoryPath;
+    }
+
+    public void setDirectoryPath(String directoryPath) {
+        this.directoryPath = directoryPath;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    
 }

@@ -2,7 +2,6 @@ package com.yasminm.util;
 
 import com.yasminm.model.UserData;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
