@@ -5,25 +5,25 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="223.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginSceneController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WelcomeSceneController">
    <children>
-      <Button id="btCrateAccount" fx:id="btCrateAccount" layoutX="135.0" layoutY="115.0" mnemonicParsing="false" onAction="#trylogin" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: #4e37e5;" text="Create Account" textAlignment="CENTER" textFill="WHITE">
+      <Button id="btCrateAccount" fx:id="btCrateAccount" layoutX="200.0" layoutY="166.0" mnemonicParsing="false" onAction="#goToCreateAccount" prefHeight="36.0" prefWidth="200.0" style="-fx-background-color: #4e37e5;" text="Create Account" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="Trebuchet MS" size="14.0" />
+            <Font name="Trebuchet MS" size="20.0" />
          </font></Button>
-      <Label alignment="CENTER" layoutX="102.5" layoutY="51.0" prefHeight="45.0" prefWidth="185.0" text="MusicPalyer" textAlignment="CENTER" textFill="#4e37e5">
+      <Label alignment="CENTER" layoutX="125.0" layoutY="52.0" prefHeight="79.0" prefWidth="350.0" text="MusicPlayer" textAlignment="CENTER" textFill="#4e37e5">
          <font>
-            <Font name="Impact" size="36.0" />
+            <Font name="Impact" size="64.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="152.5" layoutY="18.0" prefHeight="45.0" prefWidth="85.0" text="Welcome!!!" textAlignment="CENTER" textFill="#1b1b1b">
+      <Label alignment="CENTER" layoutX="240.0" layoutY="18.0" prefHeight="45.0" prefWidth="120.0" text="Welcome!!!" textAlignment="CENTER" textFill="#1b1b1b">
          <font>
-            <Font name="Impact" size="15.0" />
+            <Font name="Impact" size="24.0" />
          </font>
       </Label>
-      <Button id="btLogin" fx:id="btLogin" layoutX="135.0" layoutY="149.0" mnemonicParsing="false" onAction="#trylogin" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: #796dd1;" text="Log in" textAlignment="CENTER" textFill="WHITE">
+      <Button id="btLogin" fx:id="btLogin" layoutX="200.0" layoutY="224.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #796dd1;" text="Log in" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="Trebuchet MS" size="14.0" />
+            <Font name="Trebuchet MS" size="20.0" />
          </font>
       </Button>
    </children>

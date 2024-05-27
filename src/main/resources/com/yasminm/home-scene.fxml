@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginSceneController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomeSceneController">
    <children>
       <MenuBar prefHeight="45.0" prefWidth="800.0" />
       <Label alignment="CENTER" layoutX="307.5" layoutY="1.0" prefHeight="25.0" prefWidth="185.0" text="MusicPlayer" textAlignment="CENTER" textFill="#4e37e5">
@@ -25,28 +25,23 @@
       </Label>
       <ScrollPane layoutX="25.0" layoutY="75.0" prefHeight="420.0" prefWidth="332.0">
         <content>
-          <AnchorPane id="spAllMusic" fx:id="spAllMusic" layoutX="25.0" minHeight="0.0" minWidth="0.0" prefHeight="431.0" prefWidth="317.0" />
+          <AnchorPane id="apAllMusic" fx:id="apAllMusic" layoutX="25.0" minHeight="0.0" minWidth="0.0" prefHeight="431.0" prefWidth="317.0" />
         </content>
       </ScrollPane>
       <Pane layoutX="377.0" layoutY="75.0" prefHeight="420.0" prefWidth="394.0" style="-fx-background-color: #cfcfcf;">
          <children>
             <ProgressBar id="pbMusicProgress" fx:id="pbMusicProgress" layoutX="23.0" layoutY="283.0" prefHeight="25.0" prefWidth="350.0" progress="0.0" />
-            <Button id="btNext" fx:id="btNext" layoutX="276.0" layoutY="336.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #6452d9;" text="►►" textFill="WHITE">
+            <Button id="btNext" fx:id="btNext" layoutX="247.0" layoutY="336.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #6452d9;" text="►►" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button id="btPause" fx:id="btPause" layoutX="201.0" layoutY="336.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="45.0" style="-fx-background-color: #6452d9;" text="║" textFill="WHITE">
+            <Button id="btPlay" fx:id="btPlay" layoutX="174.0" layoutY="336.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="45.0" style="-fx-background-color: #6452d9;" text="►" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button id="btPlay" fx:id="btPlay" layoutX="146.0" layoutY="336.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="45.0" style="-fx-background-color: #6452d9;" text="►" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button id="btBack" fx:id="btBack" layoutX="56.0" layoutY="336.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="60.0" style="-fx-background-color: #6452d9;" text="◄◄" textFill="WHITE">
+            <Button id="btBack" fx:id="btBack" layoutX="87.0" layoutY="336.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="60.0" style="-fx-background-color: #6452d9;" text="◄◄" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>

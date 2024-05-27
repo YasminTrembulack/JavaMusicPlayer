@@ -1,6 +1,7 @@
 package com.yasminm;
 
 import com.yasminm.scenes.LoginSceneController;
+import com.yasminm.scenes.WelcomeSceneController;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -13,7 +14,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Scene scene = LoginSceneController.CreateScene();
+        Scene scene = WelcomeSceneController.CreateScene();
         primaryStage.setScene(scene);
         primaryStage.show();
     }
