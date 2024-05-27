@@ -12,8 +12,24 @@ public class Authentication {
     private UserData user = null;
     private Boolean userExists = false;
 
-    public static Authentification authenticateUser(String usernameInput, String passwordInput) {
-        Authentification auth = new Authentification();
+    public UserData getUser() {
+        return user;
+    }
+
+    public void setUser(UserData user) {
+        this.user = user;
+    }
+
+    public Boolean getUserExists() {
+        return userExists;
+    }
+
+    public void setUserExists(Boolean userExists) {
+        this.userExists = userExists;
+    }
+
+    public static Authentication authenticateUser(String usernameInput, String passwordInput) {
+        Authentication auth = new Authentication();
 
         Session session = HibernateUtil
                 .getSessionFactory()

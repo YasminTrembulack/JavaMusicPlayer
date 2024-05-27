@@ -21,7 +21,7 @@ import javafx.fxml.FXMLLoader;
 
 public class LoginSceneController {
     public static Scene CreateScene() throws Exception {
-        URL sceneUrl = LoginSceneController.class.getResource("main-scene.fxml");
+        URL sceneUrl = LoginSceneController.class.getResource("login-scene.fxml");
         Parent root = FXMLLoader.load(sceneUrl);
         Scene scene = new Scene(root);
         return scene;
@@ -50,7 +50,8 @@ public class LoginSceneController {
     public void tryLogin(ActionEvent e) {
         UserData user = Authentication.authenticateUser(
             getUsernameInput(), 
-            getUsernameInput());
+            getUsernameInput())
+            .getUser();
 
         if(user != null) {
             Stage crrStage = (Stage) btSubmit
