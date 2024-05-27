@@ -9,7 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ImageView;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.fxml.FXML;
@@ -29,6 +29,6 @@ public class HomeSceneController {
     @FXML
     public ImageView imagePath;
 
-    @FXML
-    public String imagePath;
+    // @FXML
+    // public String imagePath;
 }
