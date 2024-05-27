@@ -60,7 +60,7 @@ public class LoginSceneController {
 
             try {
                 Stage stage = new Stage();
-                Scene scene = HomeSceneController.CreateScene();
+                Scene scene = HomeSceneController.CreateScene(user);
                 stage.setScene(scene);
                 stage.show();
             } 

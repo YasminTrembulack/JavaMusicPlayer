@@ -1,16 +1,34 @@
 package com.yasminm.scenes;
 
-import java.net.URL;
+import com.yasminm.model.UserData;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import java.net.URL;
+import org.hibernate.HibernateException;
+
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ImageView;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 
 public class HomeSceneController {
-    public static Scene CreateScene() throws Exception {
+    public static Scene CreateScene(UserData user) throws Exception {
         URL sceneUrl = LoginSceneController.class.getResource("home-scene.fxml");
-        Parent root = FXMLLoader.load(sceneUrl);
-        Scene scene = new Scene(root);
+        FXMLLoader loader = new FXMLLoader(sceneUrl);
+        HomeSceneController controller = loader.getController();
+        Scene scene = new Scene(loader.load());
         return scene;
+
+
     }
+
+    @FXML
+    public ImageView imagePath;
+
+    @FXML
+    public String imagePath;
 }
