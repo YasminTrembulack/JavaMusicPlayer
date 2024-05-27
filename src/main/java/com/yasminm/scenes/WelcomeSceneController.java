@@ -21,7 +21,6 @@ public class WelcomeSceneController {
         Scene scene = new Scene(root);
         return scene;
     }
-
  
     @FXML
     protected Button btLogin;

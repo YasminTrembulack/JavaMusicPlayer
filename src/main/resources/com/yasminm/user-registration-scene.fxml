@@ -9,7 +9,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserRegistrationSceneController">
    <children>
-      <Button id="btLogin" fx:id="btSubmit" layoutX="284.0" layoutY="284.0" mnemonicParsing="false" onAction="#trylogin" prefHeight="26.0" prefWidth="77.0" style="-fx-background-color: #4e37e5;" text="Create" textAlignment="CENTER" textFill="WHITE">
+      <Button id="btLogin" fx:id="btSubmit" layoutX="284.0" layoutY="284.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="26.0" prefWidth="77.0" style="-fx-background-color: #4e37e5;" text="Create" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Trebuchet MS" size="14.0" />
          </font></Button>
