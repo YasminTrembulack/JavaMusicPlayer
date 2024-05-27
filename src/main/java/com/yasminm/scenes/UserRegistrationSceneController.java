@@ -23,11 +23,14 @@ public class UserRegistrationSceneController {
     protected TextField tfUsername;
 
     @FXML
+    protected TextField tfName;
+
+    @FXML
+    protected TextField tfEmail;
+
+    @FXML
     protected PasswordField pfPassword;
 
     @FXML
     protected Button btSubmit;
-
-    @FXML
-    protected CheckBox cbPassword;
 }
