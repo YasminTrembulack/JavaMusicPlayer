@@ -5,9 +5,10 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomeSceneController">
@@ -24,9 +25,88 @@
          </font>
       </Label>
       <ScrollPane layoutX="25.0" layoutY="75.0" prefHeight="420.0" prefWidth="332.0">
-        <content>
-          <AnchorPane id="apAllMusic" fx:id="apAllMusic" layoutX="25.0" minHeight="0.0" minWidth="0.0" prefHeight="431.0" prefWidth="317.0" />
-        </content>
+         <content>
+            <VBox prefHeight="420.0" prefWidth="315.0">
+               <children>
+                  <Pane prefHeight="64.0" prefWidth="315.0" style="-fx-background-color: #e6e6e6; -fx-border-color: #adadad;">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="66.0" layoutX="13.0" layoutY="7.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../../../../../../../../Pictures/Tulips.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label id="lbTitle" fx:id="lbTitle1" alignment="CENTER" layoutX="117.0" layoutY="7.0" prefHeight="27.0" prefWidth="150.0" text="Tulipas- Amarelas">
+                           <font>
+                              <Font name="Trebuchet MS Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label id="lbArtist" fx:id="lbArtist1" alignment="CENTER" layoutX="117.0" layoutY="32.0" prefHeight="27.0" prefWidth="150.0" text="Tulipas- Amarelas">
+                           <font>
+                              <Font name="Trebuchet MS" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="64.0" prefWidth="315.0" style="-fx-background-color: #e6e6e6; -fx-border-color: #adadad;">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="66.0" layoutX="13.0" layoutY="7.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../../../../../../../../Pictures/Tulips.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label id="lbTitle" fx:id="lbTitle11" alignment="CENTER" layoutX="117.0" layoutY="7.0" prefHeight="27.0" prefWidth="150.0" text="Tulipas- Amarelas">
+                           <font>
+                              <Font name="Trebuchet MS Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label id="lbArtist" fx:id="lbArtist11" alignment="CENTER" layoutX="117.0" layoutY="32.0" prefHeight="27.0" prefWidth="150.0" text="Tulipas- Amarelas">
+                           <font>
+                              <Font name="Trebuchet MS" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="64.0" prefWidth="315.0" style="-fx-background-color: #e6e6e6; -fx-border-color: #adadad;">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="66.0" layoutX="13.0" layoutY="7.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../../../../../../../../Pictures/Tulips.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label id="lbTitle" fx:id="lbTitle12" alignment="CENTER" layoutX="117.0" layoutY="7.0" prefHeight="27.0" prefWidth="150.0" text="Tulipas- Amarelas">
+                           <font>
+                              <Font name="Trebuchet MS Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label id="lbArtist" fx:id="lbArtist12" alignment="CENTER" layoutX="117.0" layoutY="32.0" prefHeight="27.0" prefWidth="150.0" text="Tulipas- Amarelas">
+                           <font>
+                              <Font name="Trebuchet MS" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="64.0" prefWidth="315.0" style="-fx-background-color: #e6e6e6; -fx-border-color: #adadad;">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="66.0" layoutX="13.0" layoutY="7.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../../../../../../../../Pictures/Tulips.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label id="lbTitle" fx:id="lbTitle13" alignment="CENTER" layoutX="117.0" layoutY="7.0" prefHeight="27.0" prefWidth="150.0" text="Tulipas- Amarelas">
+                           <font>
+                              <Font name="Trebuchet MS Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label id="lbArtist" fx:id="lbArtist13" alignment="CENTER" layoutX="117.0" layoutY="32.0" prefHeight="27.0" prefWidth="150.0" text="Tulipas- Amarelas">
+                           <font>
+                              <Font name="Trebuchet MS" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </content>
       </ScrollPane>
       <Pane layoutX="377.0" layoutY="75.0" prefHeight="420.0" prefWidth="394.0" style="-fx-background-color: #cfcfcf;">
          <children>
@@ -46,7 +126,10 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <ImageView id="ivMusicImage" fx:id="ivMusicImage" fitHeight="167.0" fitWidth="275.0" layoutX="61.0" layoutY="34.0" pickOnBounds="true" />
+            <ImageView id="ivMusicImage" fx:id="ivMusicImage" fitHeight="167.0" fitWidth="275.0" layoutX="61.0" layoutY="34.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../../../../../../Pictures/Tulips.jpg" />
+               </image></ImageView>
             <Label id="lbTitle" fx:id="lbTitle" alignment="CENTER" layoutX="21.0" layoutY="225.0" prefHeight="27.0" prefWidth="350.0" text="Tulipas- Amarelas">
                <font>
                   <Font name="Trebuchet MS Bold" size="20.0" />
