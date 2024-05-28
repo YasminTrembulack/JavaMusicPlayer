@@ -24,6 +24,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.fxml.FXML;
@@ -31,34 +33,35 @@ import javafx.fxml.FXMLLoader;
 
 public class HomeSceneController {
     public static Scene CreateScene(UserData user) throws Exception {
-        URL sceneUrl = LoginSceneController.class.getResource("home-scene.fxml");
+        URL sceneUrl = HomeSceneController.class.getResource("home-scene.fxml");
         FXMLLoader loader = new FXMLLoader(sceneUrl);
+        Parent root = loader.load();
         HomeSceneController controller = loader.getController();
-        Scene scene = new Scene(loader.load());
+        Scene scene = new Scene(root);
 
         Session session = HibernateUtil
                 .getSessionFactory()
                 .getCurrentSession();
         Transaction transaction = session.beginTransaction();
 
-        controller.setLbUsername(user.getUsername());
+        // controller.setLbUsername(user.getUsername());
 
         Query query = session.createQuery("from UserCollection u where u.userid = :userid");
         query.setParameter("userid", user.getId());
-
         List<UserCollection> collection = query.list();
 
         for(int i = 0; i < collection.size(); i++) {
             query = session.createQuery("from MusicData m where m.id = :musicid");
             query.setParameter("musicid", collection.get(i).getMusicid());
             List<MusicData> music = query.list();
-
-            Image img = new Image(getClass().getResourceAsStream(music.get(0).getImagePath()));
-            controller.displayImage(img);
-
-            controller.setLbMusicTitle(music.get(0).getTitle());
-            controller.setLbAlbumAndArtist(music.get(0).getTitle() + "-" + music.get(0).getAlbum());
+            
+            Pane p = new Pane();
+            Label l = new Label(music.get(0).getTitle());
+            p.getChildren().add(l);
+            controller.vbAllMusic.getChildren().add(p);
         }
+
+        transaction.commit();
 
         return scene;
     }
@@ -73,7 +76,7 @@ public class HomeSceneController {
     private ScrollPane sp;
 
     @FXML
-    private AnchorPane ap;
+    private VBox vbAllMusic;
 
     @FXML
     private Label lbMusicTitle;
@@ -112,12 +115,12 @@ public class HomeSceneController {
         this.sp = sp;
     }
 
-    public AnchorPane getAp() {
-        return ap;
+    public VBox getAp() {
+        return vbAllMusic;
     }
 
-    public void setAp(AnchorPane ap) {
-        this.ap = ap;
+    public void setAp(VBox vbAllMusic) {
+        this.vbAllMusic = vbAllMusic;
     }
 
     public Label getLbMusicTitle() {

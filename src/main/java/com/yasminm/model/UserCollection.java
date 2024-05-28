@@ -10,24 +10,24 @@ public class UserCollection {
     private Long id;
     
     @Column(name = "UserId")
-    private String userid;
+    private Long userid;
 
     @Column(name = "musicid")
-    private String musicid;
+    private Long musicid;
 
-    public String getUserid() {
+    public Long getUserid() {
         return userid;
     }
 
-    public void setUserid(String userid) {
+    public void setUserid(Long userid) {
         this.userid = userid;
     }
 
-    public String getMusicid() {
+    public Long getMusicid() {
         return musicid;
     }
 
-    public void setMusicid(String musicid) {
+    public void setMusicid(Long musicid) {
         this.musicid = musicid;
     }
 

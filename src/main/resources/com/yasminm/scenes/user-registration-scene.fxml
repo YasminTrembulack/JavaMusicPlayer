@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserRegistrationSceneController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yasminm.scenes.UserRegistrationSceneController">
    <children>
-      <Button id="btLogin" fx:id="btSubmit" layoutX="284.0" layoutY="284.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="26.0" prefWidth="77.0" style="-fx-background-color: #4e37e5;" text="Create" textAlignment="CENTER" textFill="WHITE">
+      <Button id="btSubmit" fx:id="btSubmit" layoutX="284.0" layoutY="284.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="26.0" prefWidth="77.0" style="-fx-background-color: #4e37e5;" text="Create" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Trebuchet MS" size="14.0" />
          </font></Button>
@@ -39,7 +39,7 @@
             <Font name="Trebuchet MS" size="13.0" />
          </font>
       </Label>
-      <TextField id="tfFullname" fx:id="tfFullname" layoutX="100.0" layoutY="125.0" prefHeight="25.0" prefWidth="261.0" />
+      <TextField id="tfFullName" fx:id="tfFullName" layoutX="100.0" layoutY="125.0" prefHeight="25.0" prefWidth="261.0" />
       <TextField id="tfEmail" fx:id="tfEmail" layoutX="100.0" layoutY="165.0" prefHeight="25.0" prefWidth="261.0" />
       <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="248.0" prefHeight="18.0" prefWidth="82.0" text="Confirm Pass:">
          <font>

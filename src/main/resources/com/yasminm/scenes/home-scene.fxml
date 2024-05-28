@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomeSceneController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yasminm.scenes.HomeSceneController">
    <children>
       <MenuBar prefHeight="45.0" prefWidth="800.0" />
       <Label alignment="CENTER" layoutX="307.5" layoutY="1.0" prefHeight="25.0" prefWidth="185.0" text="MusicPlayer" textAlignment="CENTER" textFill="#4e37e5">
@@ -25,7 +25,7 @@
       </Label>
       <ScrollPane layoutX="25.0" layoutY="75.0" prefHeight="420.0" prefWidth="332.0">
         <content>
-          <AnchorPane id="apAllMusic" fx:id="apAllMusic" layoutX="25.0" minHeight="0.0" minWidth="0.0" prefHeight="431.0" prefWidth="317.0" />
+          <VBox id="vbAllMusic" fx:id="vbAllMusic" layoutX="25.0" minHeight="0.0" minWidth="0.0" prefHeight="431.0" prefWidth="317.0" />
         </content>
       </ScrollPane>
       <Pane layoutX="377.0" layoutY="75.0" prefHeight="420.0" prefWidth="394.0" style="-fx-background-color: #cfcfcf;">

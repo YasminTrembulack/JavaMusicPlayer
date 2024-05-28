@@ -20,9 +20,6 @@ public class UserData {
 
     @Column(name = "Password")
     private String password;
-
-    @Column(name = "Directory")
-    private String directory;
     
     public Long getId() {
         return id;
@@ -62,14 +59,6 @@ public class UserData {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getDirectory() {
-        return directory;
-    }
-
-    public void setDirectory(String directory) {
-        this.directory = directory;
     }
     
 }

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WelcomeSceneController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yasminm.scenes.WelcomeSceneController">
    <children>
       <Button id="btCrateAccount" fx:id="btCrateAccount" layoutX="200.0" layoutY="166.0" mnemonicParsing="false" onAction="#goToCreateAccount" prefHeight="36.0" prefWidth="200.0" style="-fx-background-color: #4e37e5;" text="Create Account" textAlignment="CENTER" textFill="WHITE">
          <font>

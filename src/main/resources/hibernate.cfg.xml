@@ -27,6 +27,8 @@
         <!-- Drop and re-create the database schema on startup -->
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <mapping class="com.jovioakz.model.UserData"/>
+        <mapping class="com.yasminm.model.UserData"/>
+        <mapping class="com.yasminm.model.MusicData"/>
+        <mapping class="com.yasminm.model.UserCollection"/>
     </session-factory>
 </hibernate-configuration>

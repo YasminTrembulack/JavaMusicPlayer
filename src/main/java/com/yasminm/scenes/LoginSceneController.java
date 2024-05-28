@@ -67,7 +67,7 @@ public class LoginSceneController {
             catch (Exception ex) {
                 Alert alert = new Alert(
                         AlertType.ERROR,
-                        "Erro ao processar a tela. Consulte o apoio de TI",
+                        "Erro ao processar a tela de HOME. Consulte o apoio de TI",
                         ButtonType.OK);
                 alert.showAndWait();
                 ex.printStackTrace();
