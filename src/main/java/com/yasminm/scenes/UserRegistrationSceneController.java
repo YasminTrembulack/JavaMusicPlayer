@@ -34,13 +34,10 @@ public class UserRegistrationSceneController {
     protected TextField tfUsername;
 
     @FXML
-    protected TextField tfName;
+    protected TextField tfFullName;
 
     @FXML
     protected TextField tfEmail;
-
-    @FXML
-    protected PasswordField tfDirectory;
 
     @FXML
     protected PasswordField pfPassword;
@@ -57,15 +54,11 @@ public class UserRegistrationSceneController {
     }
 
     public String getNameInput() {
-        return tfName.getText();
+        return tfFullName.getText();
     }
 
     public String getEmailInput() {
         return tfEmail.getText();
-    }
-
-    public String getDirectoryInput() {
-        return tfDirectory.getText();
     }
 
     public String getPasswordInput() {
@@ -77,8 +70,8 @@ public class UserRegistrationSceneController {
     }
 
     public void registerUser(ActionEvent e) {
-        String password = pfPassword.getText();
-        String confirmPassword = pfConfirmPassword.getText();
+        String password = getPasswordInput();
+        String confirmPassword = getConfirmPasswordInput();
 
         if(!password.equals(confirmPassword)) {
             Alert alert = new Alert(
@@ -93,7 +86,6 @@ public class UserRegistrationSceneController {
         newUser.setUsername(getUsernameInput());
         newUser.setName(getNameInput());
         newUser.setEmail(getEmailInput());
-        newUser.setDirectory(getDirectoryInput());
         newUser.setPassword(confirmPassword);
 
         Session session = HibernateUtil
@@ -104,11 +96,12 @@ public class UserRegistrationSceneController {
         session.save(newUser);
         transaction.commit();
 
-        Stage crrStage = (Stage) btSubmit
-                .getScene().getWindow();
-            crrStage.close();
-
+        
         try {
+            Stage crrStage = (Stage) btSubmit
+                    .getScene().getWindow();
+                crrStage.close();
+                
             Stage stage = new Stage();
             Scene scene = HomeSceneController.CreateScene(newUser);
             stage.setScene(scene);

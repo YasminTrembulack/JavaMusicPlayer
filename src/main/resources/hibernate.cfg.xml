@@ -4,7 +4,8 @@
 
     <!-- Database connection settings -->
         <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-        <property name="hibernate.connection.url">jdbc:sqlserver://CT-C-001YV\SQLEXPRESS;databaseName=MusicPlayer;integratedSecurity=true;encrypt=true;trustServerCertificate=true</property>
+        <!-- <property name="hibernate.connection.url">jdbc:sqlserver://CT-C-001YV\SQLEXPRESS;databaseName=MusicPlayer;integratedSecurity=true;encrypt=true;trustServerCertificate=true</property> -->
+        <property name="hibernate.connection.url">jdbc:sqlserver://CT-C-001YT\SQLEXPRESS02;databaseName=MusicPlayer;integratedSecurity=true;encrypt=true;trustServerCertificate=true</property>
         <property name="hibernate.connection.integratedSecurity">true</property>
         <property name="java.library.path">C:\Program Files\sqljdbc_12.6\ptb\auth\x64\mssql-jdbc_auth-12.6.1.x64.dll</property>
 
@@ -27,6 +28,8 @@
         <!-- Drop and re-create the database schema on startup -->
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <mapping class="com.jovioakz.model.UserData"/>
+        <mapping class="com.yasminm.model.UserData"/>
+        <mapping class="com.yasminm.model.MusicData"/>
+        <mapping class="com.yasminm.model.UserCollection"/>
     </session-factory>
 </hibernate-configuration>
