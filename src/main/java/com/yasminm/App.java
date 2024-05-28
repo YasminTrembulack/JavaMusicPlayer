@@ -1,6 +1,5 @@
 package com.yasminm;
 
-import com.yasminm.scenes.LoginSceneController;
 import com.yasminm.scenes.WelcomeSceneController;
 
 import javafx.application.Application;
