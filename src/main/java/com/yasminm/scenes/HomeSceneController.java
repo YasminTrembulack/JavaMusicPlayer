@@ -5,15 +5,21 @@ import com.yasminm.model.MusicData;
 import com.yasminm.model.UserCollection;
 import com.yasminm.util.HibernateUtil;
 
+import javafx.event.EventHandler;
 import java.net.URL;
 import java.util.List;
+import java.util.Observable;
+
+import javax.swing.border.LineBorder;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -23,13 +29,19 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
 
 public class HomeSceneController {
     public static Scene CreateScene(UserData user) throws Exception {
@@ -44,30 +56,75 @@ public class HomeSceneController {
                 .getCurrentSession();
         Transaction transaction = session.beginTransaction();
 
-        // controller.setLbUsername(user.getUsername());
-
         Query query = session.createQuery("from UserCollection u where u.userid = :userid");
         query.setParameter("userid", user.getId());
         List<UserCollection> collection = query.list();
 
-        for(int i = 0; i < collection.size(); i++) {
+        for (int i = 0; i < collection.size(); i++) {
             query = session.createQuery("from MusicData m where m.id = :musicid");
             query.setParameter("musicid", collection.get(i).getMusicid());
             List<MusicData> music = query.list();
-            
+
             Pane p = new Pane();
-            Label l = new Label(music.get(0).getTitle());
-            p.getChildren().add(l);
+            p.setPrefSize(615, 84);
+
+            VBox vb = new VBox();
+            vb.setPadding(new Insets(20, 20, 20, 20));
+            p.getChildren().add(vb);
+
+            Label lbTitle = new Label(music.get(0).getTitle());
+            lbTitle.setStyle("-fx-font-weight: bold");
+            vb.getChildren().add(lbTitle);
+
+            Label lbArtist = new Label(music.get(0).getArtist());
+            vb.getChildren().add(lbArtist);
+
             controller.vbAllMusic.getChildren().add(p);
         }
 
         transaction.commit();
+
+        controller.vbAllMusic.getChildren().forEach(node -> {
+            if (node instanceof Pane) {
+                Pane pane = (Pane) node;
+                pane.setOnMouseMoved(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        if (event.getTarget() instanceof Pane) {
+                            pane.setStyle("-fx-background-color: #fdfdfd");
+                        }
+                    }
+                });
+        
+                pane.setOnMouseExited(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        pane.setStyle("-fx-background-color: #f0f0f0");
+                    }
+                });
+
+                pane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        ObservableList<Node> inside_vb = pane.getChildren();
+                        VBox vb = (VBox) inside_vb.get(0);
+                        
+                        ObservableList<Node> labels = vb.getChildren();
+                        Label musicTitle = (Label) labels.get(0);
+                        System.out.println("CLICKED:" + musicTitle.getText());
+
+                        controller.setLbTitle(musicTitle.getText());
+                    }
+                });
+            }
+        });
 
         return scene;
     }
 
     @FXML
     private ImageView ivMusicImage;
+
     public void displayImage(Image img) {
         ivMusicImage.setImage(img);
     }
@@ -79,7 +136,7 @@ public class HomeSceneController {
     private VBox vbAllMusic;
 
     @FXML
-    private Label lbMusicTitle;
+    private Label lbTitle;
 
     @FXML
     private Label lbAlbumAndArtist;
@@ -123,12 +180,12 @@ public class HomeSceneController {
         this.vbAllMusic = vbAllMusic;
     }
 
-    public Label getLbMusicTitle() {
-        return lbMusicTitle;
+    public Label getLbTitle() {
+        return lbTitle;
     }
 
-    public void setLbMusicTitle(String lbMusicTitle) {
-        this.lbMusicTitle.setText(lbMusicTitle);
+    public void setLbTitle(String MusicTitle) {
+        this.lbTitle.setText(MusicTitle);
     }
 
     public Label getLbAlbumAndArtist() {
@@ -179,5 +236,4 @@ public class HomeSceneController {
         this.lbUsername.setText(lbUsername);
     }
 
-    
 }
