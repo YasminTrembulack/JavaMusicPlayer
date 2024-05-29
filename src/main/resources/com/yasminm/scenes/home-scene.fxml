@@ -6,8 +6,12 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
+<<<<<<< HEAD
 <?import javafx.scene.layout.VBox?>
+=======
+>>>>>>> yasmiN
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yasminm.scenes.HomeSceneController">
@@ -18,15 +22,15 @@
             <Font name="Impact" size="36.0" />
          </font>
       </Label>
-      <Label fx:id="lbUsername" alignment="CENTER_RIGHT" layoutX="529.0" layoutY="12.0" prefHeight="21.0" prefWidth="254.0" text="Yasminssss" textAlignment="CENTER" textFill="#1b1b1b">
+      <Label fx:id="lbUsername" alignment="CENTER_RIGHT" layoutX="529.0" layoutY="13.0" prefHeight="21.0" prefWidth="261.0" text="Yasminssssssssssssssssssssssss" textAlignment="CENTER" textFill="#1b1b1b">
          <font>
             <Font name="Impact" size="15.0" />
          </font>
       </Label>
       <ScrollPane layoutX="25.0" layoutY="75.0" prefHeight="420.0" prefWidth="332.0">
-        <content>
-          <VBox id="vbAllMusic" fx:id="vbAllMusic" layoutX="25.0" minHeight="0.0" minWidth="0.0" prefHeight="431.0" prefWidth="317.0" />
-        </content>
+         <content>
+            <VBox id="vbAllMusic" fx:id="vbAllMusic" prefHeight="420.0" prefWidth="316.0" />
+         </content>
       </ScrollPane>
       <Pane id="pnCurrentMusic" fx:id="pnCurrentMusic" layoutX="377.0" layoutY="75.0" prefHeight="420.0" prefWidth="394.0" style="-fx-background-color: #cfcfcf;">
          <children>
@@ -59,7 +63,12 @@
             </Label>
          </children>
       </Pane>
-      <Button fx:id="btAddMusic" layoutX="10.0" layoutY="7.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="107.0" style="-fx-background-color: #6452d9;" text="Add Music ♫" textFill="WHITE">
+      <Button fx:id="btAddMusic" layoutX="65.0" layoutY="6.0" mnemonicParsing="false" onAction="#goToAddMusic" prefHeight="30.0" prefWidth="107.0" style="-fx-background-color: #6452d9;" text="Add Music ♫" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button id="btExit" fx:id="btExit" layoutX="10.0" layoutY="6.0" mnemonicParsing="false" onAction="#tryExit" prefHeight="30.0" prefWidth="45.0" style="-fx-border-color: #6452d9; -fx-background-color: #ffffff;" text="Exit" textFill="#6452d9">
          <font>
             <Font size="14.0" />
          </font>

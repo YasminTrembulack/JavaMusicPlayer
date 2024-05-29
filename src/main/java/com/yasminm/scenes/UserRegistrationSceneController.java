@@ -31,6 +31,9 @@ public class UserRegistrationSceneController {
     }
 
     @FXML
+    protected Button btBackScene;
+
+    @FXML
     protected TextField tfUsername;
 
     @FXML
@@ -111,6 +114,27 @@ public class UserRegistrationSceneController {
             Alert alert = new Alert(
                     AlertType.ERROR,
                     "Erro ao processar a tela. Consulte o apoio de TI",
+                    ButtonType.OK);
+            alert.showAndWait();
+            ex.printStackTrace();
+        }
+    }
+
+    public void tryBackScene() {
+        try {
+            Stage crrStage = (Stage) btBackScene
+                .getScene().getWindow();
+            crrStage.close();
+
+            Stage stage = new Stage();
+            Scene scene = WelcomeSceneController.CreateScene();
+            stage.setScene(scene);
+            stage.show();
+        } 
+        catch (Exception ex) {
+            Alert alert = new Alert(
+                    AlertType.ERROR,
+                    "Erro ao processar a tela Welcome. Consulte o apoio de TI",
                     ButtonType.OK);
             alert.showAndWait();
             ex.printStackTrace();
