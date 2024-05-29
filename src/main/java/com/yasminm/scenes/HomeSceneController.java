@@ -6,10 +6,17 @@ import com.yasminm.model.UserCollection;
 import com.yasminm.util.HibernateUtil;
 
 import javafx.event.EventHandler;
+
+import java.io.File;
+import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.border.LineBorder;
 
 import org.hibernate.HibernateException;
@@ -33,6 +40,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -51,39 +61,42 @@ public class HomeSceneController {
         HomeSceneController controller = loader.getController();
         Scene scene = new Scene(root);
 
-        Session session = HibernateUtil
-                .getSessionFactory()
-                .getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+        controller.setCurrentUser(user);
+        controller.buildMusicDisplay(controller, user);
+        controller.setPaneListeners(controller);
 
-        Query query = session.createQuery("from UserCollection u where u.userid = :userid");
-        query.setParameter("userid", user.getId());
-        List<UserCollection> collection = query.list();
+        return scene;
+    }
+
+    public void buildMusicDisplay(HomeSceneController controller, UserData user) {
+
+        List<UserCollection> collection = getUserCollectionFromDB(user);
 
         for (int i = 0; i < collection.size(); i++) {
-            query = session.createQuery("from MusicData m where m.id = :musicid");
-            query.setParameter("musicid", collection.get(i).getMusicid());
-            List<MusicData> music = query.list();
+
+            MusicData music = getMusicFromDB(collection.get(i).getMusicid());
 
             Pane p = new Pane();
             p.setPrefSize(615, 84);
 
             VBox vb = new VBox();
             vb.setPadding(new Insets(20, 20, 20, 20));
-            p.getChildren().add(vb);
 
-            Label lbTitle = new Label(music.get(0).getTitle());
+            Label lbTitle = new Label(music.getTitle());
             lbTitle.setStyle("-fx-font-weight: bold");
-            vb.getChildren().add(lbTitle);
 
-            Label lbArtist = new Label(music.get(0).getArtist());
+            Label lbArtist = new Label(music.getArtist() + " - " + music.getAlbum());
+
+            vb.getChildren().add(lbTitle);
             vb.getChildren().add(lbArtist);
+
+            p.getChildren().add(vb);
 
             controller.vbAllMusic.getChildren().add(p);
         }
+    }
 
-        transaction.commit();
-
+    public void setPaneListeners(HomeSceneController controller) {
         controller.vbAllMusic.getChildren().forEach(node -> {
             if (node instanceof Pane) {
                 Pane pane = (Pane) node;
@@ -95,7 +108,7 @@ public class HomeSceneController {
                         }
                     }
                 });
-        
+
                 pane.setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
@@ -108,32 +121,214 @@ public class HomeSceneController {
                     public void handle(MouseEvent event) {
                         ObservableList<Node> inside_vb = pane.getChildren();
                         VBox vb = (VBox) inside_vb.get(0);
-                        
+
                         ObservableList<Node> labels = vb.getChildren();
                         Label musicTitle = (Label) labels.get(0);
-                        System.out.println("CLICKED:" + musicTitle.getText());
+                        MusicData music = getMusicFromDB(musicTitle.getText());
 
-                        controller.setLbTitle(musicTitle.getText());
+                        controller.setCurrentMusic(music);
+                        MediaPlayer mp = createMediaPlayer(controller);
+                        controller.setCurrentMusicPlayer(mp);
+
+                        controller.setLbTitle(music.getTitle());
+                        controller.setLbAlbumAndArtist(music.getArtist() + " - " + music.getAlbum());
                     }
                 });
             }
         });
+    }
 
-        return scene;
+    public void btPlayAction(ActionEvent e) {
+        MediaPlayer mp = getCurrentMusicPlayer();
+   
+        if(mp.getStatus() == Status.PLAYING) {
+            mp.pause();
+            return;
+        }
+        else if(mp.getStatus() == Status.PAUSED) {
+            mp.play();
+            return;
+        }
+
+        mp.play();
+        return;
+    }
+
+    public void btNextAction(ActionEvent e) {
+        int index = 0;
+        List<UserCollection> collection = getUserCollectionFromDB(getCurrentUser());
+        ArrayList<MusicData> allMusic = getAllMusics(collection);
+
+        for(int i = 0; i < allMusic.size(); i++) {
+            if(allMusic.get(i).equals(getCurrentMusic())) {
+                index = i;
+            }
+        }
+
+        int music = index;
+        if(index <= allMusic.size() - 1) {
+            music = index + 1;
+        } 
+
+        System.out.println(music);
+        System.out.println(allMusic.get(music).getTitle());
+        setCurrentMusic(allMusic.get(music));
+        setLbTitle(currentMusic.getTitle());
+        setLbAlbumAndArtist(currentMusic.getArtist() + " - " + currentMusic.getAlbum());
+    }
+
+    public void btBackAction(ActionEvent e) {
+        int index = 0;
+        List<UserCollection> collection = getUserCollectionFromDB(getCurrentUser());
+        ArrayList<MusicData> allMusic = getAllMusics(collection);
+        for(MusicData m : allMusic) System.out.println(m.getTitle());
+
+        for(int i = 0; i < allMusic.size(); i++) {
+            if(allMusic.get(i).equals(getCurrentMusic())) {
+                index = i;
+            }
+        }
+
+        int music = 0;
+        if(index - 1 <= allMusic.size() - 1) {
+            music = index;
+        } 
+        else {
+            music = index - 1;
+        }
+
+        System.out.println(music);
+        System.out.println(allMusic.get(music).getTitle());
+        setCurrentMusic(allMusic.get(music));
+        setLbTitle(currentMusic.getTitle());
+        setLbAlbumAndArtist(currentMusic.getArtist() + " - " + currentMusic.getAlbum());
+    }
+
+    // public void setButtonsListeners(HomeSceneController controller, List<UserCollection> collection) {
+
+    //     controller.btPlay.setOnMouseClicked(new EventHandler<MouseEvent>() {
+    //         @Override
+    //         public void handle(MouseEvent event) {
+    //             System.out.println("AAAAAAAAAAA CLICKED");
+    //             MediaPlayer mp = controller.getCurrentMusicPlayer();
+   
+    //             if(mp.getStatus() == Status.PLAYING) {
+    //                 mp.pause();
+    //             }
+    //             else if(mp.getStatus() == Status.PAUSED) {
+    //                 mp.play();
+    //             }
+    //         }
+    //     });
+
+    //     controller.btNext.setOnMouseClicked(new EventHandler<MouseEvent>() {
+    //         @Override
+    //         public void handle(MouseEvent event) {
+    //             int index = 0;
+    //             ArrayList<MusicData> allMusic = controller.getAllMusics(collection);
+
+    //             for(int i = 0; i < allMusic.size(); i++) {
+    //                 if(allMusic.get(i).equals(controller.getCurrentMusic())) {
+    //                     index = i;
+    //                 }
+    //             }
+
+    //             controller.setCurrentMusic(allMusic.get(index + 1));
+    //         }
+    //     });
+    // }
+
+    public MediaPlayer createMediaPlayer(HomeSceneController controller) {
+        try {
+            File file = new File(controller.getCurrentMusic().getdirectoryPath());
+            URI uri = file.toURI();
+            String mediaUrl = uri.toString();           
+            Media media = new Media(mediaUrl); 
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            return mediaPlayer;
+
+        } catch (Exception ex) {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<UserCollection> getUserCollectionFromDB(UserData user) {
+        // .. create session to consult database ..
+        Session session = HibernateUtil
+                .getSessionFactory()
+                .getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+
+        // .. gets user collection data from database ..
+        Query query = session.createQuery("from UserCollection u where u.userid = :userid");
+        query.setParameter("userid", user.getId());
+
+        List<UserCollection> l = query.list();
+
+        transaction.commit();
+
+        return l;
+    }
+
+    public MusicData getMusicFromDB(String musicTitle) {
+        // .. create session to consult database ..
+        Session session = HibernateUtil
+                .getSessionFactory()
+                .getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+
+        // .. gets user collection data from database ..
+        Query query = session.createQuery("from MusicData m where m.title = :musicTitle");
+        query.setParameter("musicTitle", musicTitle);
+        List<MusicData> music = query.list();
+
+        MusicData m = (MusicData) music.get(0);
+
+        transaction.commit();
+
+        return m;
+    }
+
+    public MusicData getMusicFromDB(Long musicid) {
+        // .. create session to consult database ..
+        Session session = HibernateUtil
+                .getSessionFactory()
+                .getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+
+        // .. gets user collection data from database ..
+        Query query = session.createQuery("from MusicData m where m.id = :musicid");
+        query.setParameter("musicid", musicid);
+        List<MusicData> music = query.list();
+
+        MusicData m = (MusicData) music.get(0);
+
+        transaction.commit();
+
+        return m;
+    }
+
+    public ArrayList<MusicData> getAllMusics(List<UserCollection> l) {
+        ArrayList<MusicData> paths = new ArrayList<>();
+
+        for(UserCollection u : l) {
+            MusicData m = getMusicFromDB(u.getMusicid());
+            paths.add(m);
+        }
+
+        return paths;
     }
 
     @FXML
     private ImageView ivMusicImage;
 
-    public void displayImage(Image img) {
-        ivMusicImage.setImage(img);
-    }
-
-    @FXML
-    private ScrollPane sp;
-
     @FXML
     private VBox vbAllMusic;
+
+    @FXML
+    private Pane pnCurrentMusic;
 
     @FXML
     private Label lbTitle;
@@ -145,51 +340,91 @@ public class HomeSceneController {
     private ProgressBar pb;
 
     @FXML
-    private Button btPlayButton;
+    private Button btPlay;
 
     @FXML
     private Button btNext;
 
     @FXML
-    private Button btPrevious;
+    private Button btBack;
 
     @FXML
     private Label lbUsername;
+
+    private MusicData currentMusic;
+
+    private MediaPlayer currentMusicPlayer;
+
+    private UserData currentUser;
+
+    private Integer currentMusicIndex;
+
+    public Integer getCurrentMusicIndex() {
+        return currentMusicIndex;
+    }
+
+    public void setCurrentMusicIndex(Integer currentMusicIndex) {
+        this.currentMusicIndex = currentMusicIndex;
+    }
+
+    public UserData getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(UserData currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public MediaPlayer getCurrentMusicPlayer() {
+        return currentMusicPlayer;
+    }
+
+    public void setCurrentMusicPlayer(MediaPlayer currentMusicPlayer) {
+        this.currentMusicPlayer = currentMusicPlayer;
+    }
+
+    public Pane getPnCurrentMusic() {
+        return pnCurrentMusic;
+    }
+
+    public MusicData getCurrentMusic() {
+        return currentMusic;
+    }
 
     public ImageView getIvMusicImage() {
         return ivMusicImage;
     }
 
-    public void setIvMusicImage(ImageView ivMusicImage) {
-        this.ivMusicImage = ivMusicImage;
-    }
-
-    public ScrollPane getSp() {
-        return sp;
-    }
-
-    public void setSp(ScrollPane sp) {
-        this.sp = sp;
-    }
-
-    public VBox getAp() {
+    public VBox getVbAllMusic() {
         return vbAllMusic;
-    }
-
-    public void setAp(VBox vbAllMusic) {
-        this.vbAllMusic = vbAllMusic;
     }
 
     public Label getLbTitle() {
         return lbTitle;
     }
 
-    public void setLbTitle(String MusicTitle) {
-        this.lbTitle.setText(MusicTitle);
-    }
-
     public Label getLbAlbumAndArtist() {
         return lbAlbumAndArtist;
+    }
+
+    public void setLbTitle(Label lbTitle) {
+        this.lbTitle = lbTitle;
+    }
+
+    public void setCurrentMusic(MusicData currentMusic) {
+        this.currentMusic = currentMusic;
+    }
+
+    public void setIvMusicImage(ImageView ivMusicImage) {
+        this.ivMusicImage = ivMusicImage;
+    }
+
+    public void setAp(VBox vbAllMusic) {
+        this.vbAllMusic = vbAllMusic;
+    }
+
+    public void setLbTitle(String MusicTitle) {
+        this.lbTitle.setText(MusicTitle);
     }
 
     public void setLbAlbumAndArtist(String lbAlbumAndArtist) {
@@ -204,12 +439,12 @@ public class HomeSceneController {
         this.pb = pb;
     }
 
-    public Button getBtPlayButton() {
-        return btPlayButton;
+    public Button getBtPlay() {
+        return btPlay;
     }
 
-    public void setBtPlayButton(Button btPlayButton) {
-        this.btPlayButton = btPlayButton;
+    public void setBtPlay(Button btPlay) {
+        this.btPlay = btPlay;
     }
 
     public Button getBtNext() {
@@ -220,12 +455,12 @@ public class HomeSceneController {
         this.btNext = btNext;
     }
 
-    public Button getBtPrevious() {
-        return btPrevious;
+    public Button getBtBack() {
+        return btBack;
     }
 
-    public void setBtPrevious(Button btPrevious) {
-        this.btPrevious = btPrevious;
+    public void setBtBack(Button btBack) {
+        this.btBack = btBack;
     }
 
     public Label getLbUsername() {
