@@ -5,6 +5,7 @@ import com.yasminm.model.MusicData;
 import com.yasminm.model.UserCollection;
 import com.yasminm.util.HibernateUtil;
 
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 
@@ -65,6 +66,16 @@ public class HomeSceneController {
         }
 
         transaction.commit();
+
+
+        //IMAGEM ##########
+        String imagePath = "C:/Users/disrct/Pictures/Chrysanthemum.jpg";
+        File file = new File(imagePath);
+        String fileURL = file.toURI().toURL().toString();
+        Image image = new Image(fileURL);
+        controller.displayImage(image);
+
+
 
         return scene;
     }
