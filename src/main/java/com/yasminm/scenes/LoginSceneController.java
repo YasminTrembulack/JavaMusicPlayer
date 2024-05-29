@@ -38,6 +38,8 @@ public class LoginSceneController {
 
     @FXML
     protected CheckBox cbPassword;
+    @FXML
+    protected TextField tfPassword;
 
     public String getUsernameInput() {
         return tfUsername.getText();
@@ -82,4 +84,18 @@ public class LoginSceneController {
             return;
         }
     }
+
+    public void togglevisiblePassword(ActionEvent event) {
+        if (cbPassword.isSelected()) {
+            tfPassword.setText(pfPassword.getText());
+            tfPassword.setVisible(true);
+            pfPassword.setVisible(false);
+            return;
+        }
+        pfPassword.setText(tfPassword.getText());
+        pfPassword.setVisible(true);
+        tfPassword.setVisible(false);
+    }
+
+    
 }

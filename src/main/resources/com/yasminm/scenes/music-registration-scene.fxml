@@ -23,7 +23,7 @@
             <Font name="Trebuchet MS" size="13.0" />
          </font>
       </Label>
-      <TextField id="tfArtistic" fx:id="tfArtistic" layoutX="100.0" layoutY="190.0" prefHeight="25.0" prefWidth="261.0" />
+      <TextField id="tfArtist" fx:id="tfArtist" layoutX="100.0" layoutY="190.0" prefHeight="25.0" prefWidth="261.0" />
       <TextField id="tfDirPath" fx:id="tfDirPath" layoutX="100.0" layoutY="230.0" prefHeight="25.0" prefWidth="261.0" />
       <Label alignment="CENTER_RIGHT" layoutX="19.0" layoutY="232.0" prefHeight="18.0" prefWidth="77.0" text="Dir path:">
          <font>

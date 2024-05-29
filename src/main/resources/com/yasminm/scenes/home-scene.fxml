@@ -28,7 +28,7 @@
             <VBox id="vbAllMusic" fx:id="vbAllMusic" prefHeight="420.0" prefWidth="316.0" />
          </content>
       </ScrollPane>
-      <Pane layoutX="377.0" layoutY="75.0" prefHeight="420.0" prefWidth="394.0" style="-fx-background-color: #cfcfcf;">
+      <Pane id="pnCurrentMusic" fx:id="pnCurrentMusic" layoutX="377.0" layoutY="75.0" prefHeight="420.0" prefWidth="394.0" style="-fx-background-color: #cfcfcf;">
          <children>
             <ProgressBar id="pbMusicProgress" fx:id="pbMusicProgress" layoutX="23.0" layoutY="283.0" prefHeight="25.0" prefWidth="350.0" progress="0.0" />
             <Button id="btNext" fx:id="btNext" layoutX="247.0" layoutY="336.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #6452d9;" text="►►" textFill="WHITE">

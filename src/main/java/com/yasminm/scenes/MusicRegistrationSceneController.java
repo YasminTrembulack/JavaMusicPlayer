@@ -49,7 +49,7 @@ public class MusicRegistrationSceneController {
     protected TextField tfAlbum;
 
     @FXML
-    protected TextField tfArtistic;
+    protected TextField tfArtist;
 
     @FXML
     protected TextField tfDirPath;
@@ -69,12 +69,12 @@ public class MusicRegistrationSceneController {
         this.tfAlbum = tfAlbum;
     }
 
-    public String getTfArtistic() {
-        return tfArtistic.getText();
+    public String getTfArtist() {
+        return tfArtist.getText();
     }
 
-    public void setTfArtistic(TextField tfArtistic) {
-        this.tfArtistic = tfArtistic;
+    public void setTfArtist(TextField tfArtist) {
+        this.tfArtist = tfArtist;
     }
 
     public String getTfDirPath() {
@@ -103,16 +103,12 @@ public class MusicRegistrationSceneController {
 
     public void tryAddMusic(){
 
-        String tempTitle = getTfTitle();
-        String tempArtistc = getTfArtistic();
-        String tempAlbum = getTfAlbum();
-
         UserCollection newCollection = new UserCollection();
 
         MusicData newMusic = new MusicData();
         newMusic.setTitle(getTfTitle());
         newMusic.setAlbum(getTfAlbum());
-        newMusic.setArtist(getTfArtistic());
+        newMusic.setArtist(getTfArtist());
         newMusic.setDirectoryPath(getTfDirPath());
         newMusic.setImagePath(getTfImgPath());
         
@@ -123,15 +119,25 @@ public class MusicRegistrationSceneController {
         Transaction transaction = session.beginTransaction();
 
         session.save(newMusic);
-        
-        // Query query = session.createQuery("from MusicData m where m.Album = "+tempAlbum+" and m.Artistc = "+tempArtistc+" and m.Title = "+tempTitle);
-        // query.setParameter("userid", user.getId());
-        // List<UserCollection> music = query.list();
 
-        // newCollection.setMusicid(music.get(0).getMusicid());
-        // newCollection.setUserid(user.getId());
+        transaction.commit();
 
-        // session.save(newCollection);
+        session = HibernateUtil
+                .getSessionFactory()
+                .getCurrentSession();
+        transaction = session.beginTransaction();
+
+        Query query = session.createQuery("from MusicData m where m.title = :music_title and m.artist = :music_artist and m.album = :music_album");
+        query.setParameter("music_title", getTfTitle());
+        query.setParameter("music_artist", getTfArtist());
+        query.setParameter("music_album", getTfAlbum());
+
+        List<MusicData> music = query.list();
+
+        newCollection.setMusicid(music.get(0).getId());
+        newCollection.setUserid(user.getId());
+
+        session.save(newCollection);
         
         transaction.commit();
 
