@@ -8,16 +8,16 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="226.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yasminm.scenes.LoginSceneController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="226.0" prefWidth="390.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yasminm.scenes.LoginSceneController">
    <children>
       <Button id="btSubmit" fx:id="btSubmit" layoutX="284.0" layoutY="159.0" mnemonicParsing="false" onAction="#tryLogin" prefHeight="26.0" prefWidth="77.0" style="-fx-background-color: #4e37e5;" text="Log in" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Trebuchet MS" size="14.0" />
          </font></Button>
       <TextField id="tfUsername" fx:id="tfUsername" layoutX="100.0" layoutY="85.0" prefHeight="25.0" prefWidth="261.0" />
-      <Label alignment="CENTER" layoutX="110.0" layoutY="23.0" prefHeight="45.0" prefWidth="170.0" text="LOGIN" textFill="#4e37e5">
+      <Label alignment="CENTER" layoutX="110.0" layoutY="15.0" prefHeight="45.0" prefWidth="170.0" text="LOGIN" textFill="#4e37e5">
          <font>
-            <Font name="Impact" size="24.0" />
+            <Font name="Impact" size="27.0" />
          </font>
       </Label>
       <Label alignment="CENTER_RIGHT" layoutX="32.0" layoutY="87.0" prefHeight="18.0" prefWidth="64.0" text="Username:">
@@ -37,5 +37,10 @@
          </font>
       </CheckBox>
       <TextField id="tfPassword" fx:id="tfPassword" layoutX="100.0" layoutY="125.0" prefHeight="25.0" prefWidth="261.0" visible="false" />
+      <Button id="btBackScene" fx:id="btBackScene" layoutX="22.0" layoutY="19.0" mnemonicParsing="false" onAction="#tryBackScene" prefHeight="35.0" prefWidth="50.0" style="-fx-background-color: #ffffff; -fx-border-color: #d4d4d4;" text="← " textAlignment="CENTER" textFill="#4e37e5">
+         <font>
+            <Font name="Trebuchet MS" size="18.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

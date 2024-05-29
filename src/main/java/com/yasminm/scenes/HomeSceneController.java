@@ -25,7 +25,6 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -48,7 +47,7 @@ public class HomeSceneController {
                 .getCurrentSession();
         Transaction transaction = session.beginTransaction();
 
-        // controller.setLbUsername(user.getUsername());
+        controller.setLbUsername(user.getUsername());
 
         Query query = session.createQuery("from UserCollection u where u.userid = :userid");
         query.setParameter("userid", user.getId());
@@ -100,6 +99,31 @@ public class HomeSceneController {
             ex.printStackTrace();
         }
     }
+
+    public void tryExit() {
+
+        try {
+            Stage crrStage = (Stage) btExit
+                .getScene().getWindow();
+            crrStage.close();
+
+            Stage stage = new Stage();
+            Scene scene = WelcomeSceneController.CreateScene();
+            stage.setScene(scene);
+            stage.show();
+        } 
+        catch (Exception ex) {
+            Alert alert = new Alert(
+                    AlertType.ERROR,
+                    "Erro ao processar a tela Welcome. Consulte o apoio de TI",
+                    ButtonType.OK);
+            alert.showAndWait();
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private Button btExit;
 
     @FXML
     private ImageView ivMusicImage;
@@ -201,6 +225,14 @@ public class HomeSceneController {
 
     public void setBtNext(Button btNext) {
         this.btNext = btNext;
+    }
+
+    public Button getBtExit() {
+        return btExit;
+    }
+
+    public void setBtExit(Button btExit) {
+        this.btExit = btExit;
     }
 
     public Button getBtPrevious() {

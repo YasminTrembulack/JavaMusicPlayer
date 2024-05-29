@@ -18,7 +18,7 @@
             <Font name="Impact" size="36.0" />
          </font>
       </Label>
-      <Label fx:id="lbUsername" alignment="CENTER_RIGHT" layoutX="529.0" layoutY="12.0" prefHeight="21.0" prefWidth="254.0" text="Yasminssss" textAlignment="CENTER" textFill="#1b1b1b">
+      <Label fx:id="lbUsername" alignment="CENTER_RIGHT" layoutX="529.0" layoutY="13.0" prefHeight="21.0" prefWidth="261.0" text="Yasminssssssssssssssssssssssss" textAlignment="CENTER" textFill="#1b1b1b">
          <font>
             <Font name="Impact" size="15.0" />
          </font>
@@ -59,7 +59,12 @@
             </Label>
          </children>
       </Pane>
-      <Button fx:id="btAddMusic" layoutX="10.0" layoutY="7.0" mnemonicParsing="false" onAction="#goToAddMusic" prefHeight="30.0" prefWidth="107.0" style="-fx-background-color: #6452d9;" text="Add Music ♫" textFill="WHITE">
+      <Button fx:id="btAddMusic" layoutX="65.0" layoutY="6.0" mnemonicParsing="false" onAction="#goToAddMusic" prefHeight="30.0" prefWidth="107.0" style="-fx-background-color: #6452d9;" text="Add Music ♫" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button id="btExit" fx:id="btExit" layoutX="10.0" layoutY="6.0" mnemonicParsing="false" onAction="#tryExit" prefHeight="30.0" prefWidth="45.0" style="-fx-border-color: #6452d9; -fx-background-color: #ffffff;" text="Exit" textFill="#6452d9">
          <font>
             <Font size="14.0" />
          </font>
