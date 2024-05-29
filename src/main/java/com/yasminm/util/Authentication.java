@@ -37,6 +37,8 @@ public class Authentication {
 
         Query query = session.createQuery("from UserData u where u.username = :user");
         query.setParameter("user", usernameInput);
+        System.out.println("Login"+usernameInput);
+        System.out.println("Senha"+passwordInput);
 
         List<UserData> users = query.list();
         transaction.commit();
