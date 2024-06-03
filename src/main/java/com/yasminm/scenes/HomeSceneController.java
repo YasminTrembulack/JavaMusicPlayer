@@ -268,6 +268,11 @@ public class HomeSceneController {
 
         List<UserCollection> l = query.list();
 
+        if(l.size() <= 0) {
+            System.out.println("Error collecting data from database ;/");
+            return null;
+        }
+
         transaction.commit();
 
         return l;
@@ -284,6 +289,11 @@ public class HomeSceneController {
         Query query = session.createQuery("from MusicData m where m.title = :musicTitle");
         query.setParameter("musicTitle", musicTitle);
         List<MusicData> music = query.list();
+
+        if(music.size() <= 0) {
+            System.out.println("Error collecting data from database ;/");
+            return null;
+        }
 
         MusicData m = (MusicData) music.get(0);
 
@@ -303,6 +313,11 @@ public class HomeSceneController {
         Query query = session.createQuery("from MusicData m where m.id = :musicid");
         query.setParameter("musicid", musicid);
         List<MusicData> music = query.list();
+
+        if(music.size() <= 0) {
+            System.out.println("Error collecting data from database ;/");
+            return null;
+        }
 
         MusicData m = (MusicData) music.get(0);
 
