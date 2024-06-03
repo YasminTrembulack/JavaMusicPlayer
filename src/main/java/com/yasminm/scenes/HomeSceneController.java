@@ -69,7 +69,6 @@ public class HomeSceneController {
         List<UserCollection> collection = getUserCollectionFromDB(user);
 
         if(collection == null) return;
-
         for (int i = 0; i < collection.size(); i++) {
             MusicData music = getMusicFromDB(collection.get(i).getMusicid());
 
@@ -91,6 +90,8 @@ public class HomeSceneController {
 
             controller.vbAllMusic.getChildren().add(p);
         }
+        
+        selectMusic(getMusicFromDB(collection.get(0).getMusicid()));
     }
 
     public void setPaneListeners(HomeSceneController controller) {

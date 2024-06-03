@@ -92,14 +92,22 @@ public class MusicRegistrationSceneController {
                     "Musica adicionada com sucesso!",
                     ButtonType.OK);
             alert.showAndWait();
+
+        // .. clear text fields..
+        setTfAlbum("");
+        setTfArtist("");
+        setTfDirPath("");
+        setTfTitle("");
+        setTfImgPath("");
     }
 
+    
     public void tryBackScene() {
         try {
             Stage crrStage = (Stage) btBackScene
-                .getScene().getWindow();
+            .getScene().getWindow();
             crrStage.close();
-
+            
             Stage stage = new Stage();
             Scene scene = HomeSceneController.CreateScene(user);
             stage.setScene(scene);
@@ -114,25 +122,47 @@ public class MusicRegistrationSceneController {
             ex.printStackTrace();
         }
     }
-
+    
     // ---- GETTERS ---- 
     public String getTfAlbum() {
         return tfAlbum.getText();
     }
-
+    
     public String getTfArtist() {
         return tfArtist.getText();
     }
-
+    
     public String getTfDirPath() {
         return tfDirPath.getText();
     }
-
+    
     public String getTfImgPath() {
         return tfImgPath.getText();
     }
-
+    
     public String getTfTitle() {
         return tfTitle.getText();
+    }
+
+
+    // ---- SETTERS ---- 
+    public void setTfAlbum(String string) {
+        this.tfAlbum.setText(string);
+    }
+
+    public void setTfArtist(String string) {
+        this.tfArtist.setText(string);
+    }
+
+    public void setTfDirPath(String string) {
+        this.tfDirPath.setText(string);
+    }
+
+    public void setTfImgPath(String string) {
+        this.tfImgPath.setText(string);
+    }
+
+    public void setTfTitle(String string) {
+        this.tfTitle.setText(string);
     }
 }
