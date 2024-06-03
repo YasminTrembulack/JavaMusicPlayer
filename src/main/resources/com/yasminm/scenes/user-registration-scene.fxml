@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yasminm.scenes.UserRegistrationSceneController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="390.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yasminm.scenes.UserRegistrationSceneController">
    <children>
       <Button id="btSubmit" fx:id="btSubmit" layoutX="284.0" layoutY="284.0" mnemonicParsing="false" onAction="#registerUser" prefHeight="26.0" prefWidth="77.0" style="-fx-background-color: #4e37e5;" text="Create" textAlignment="CENTER" textFill="WHITE">
          <font>
@@ -24,9 +24,9 @@
          </font>
       </Label>
       <TextField id="tfUsername" fx:id="tfUsername" layoutX="100.0" layoutY="85.0" prefHeight="25.0" prefWidth="261.0" />
-      <Label alignment="CENTER" layoutX="110.0" layoutY="23.0" prefHeight="45.0" prefWidth="170.0" text="CREATE ACCOUNT" textFill="#4e37e5">
+      <Label alignment="CENTER" layoutX="110.0" layoutY="23.0" prefHeight="45.0" prefWidth="188.0" text="CREATE ACCOUNT" textFill="#4e37e5">
          <font>
-            <Font name="Impact" size="24.0" />
+            <Font name="Impact" size="27.0" />
          </font>
       </Label>
       <Label alignment="CENTER_RIGHT" layoutX="32.0" layoutY="87.0" prefHeight="18.0" prefWidth="64.0" text="Username:">
@@ -48,5 +48,10 @@
       </Label>
       <PasswordField id="pfConfirmPassword" fx:id="pfConfirmPassword" layoutX="100.0" layoutY="245.0" prefHeight="25.0" prefWidth="261.0" />
       <PasswordField id="pfPassword" fx:id="pfPassword" layoutX="100.0" layoutY="205.0" prefHeight="25.0" prefWidth="261.0" />
+      <Button id="btBackScene" fx:id="btBackScene" layoutX="32.0" layoutY="29.0" mnemonicParsing="false" onAction="#tryBackScene" prefHeight="35.0" prefWidth="50.0" style="-fx-background-color: #ffffff; -fx-border-color: #d4d4d4;" text="← " textAlignment="CENTER" textFill="#4e37e5">
+         <font>
+            <Font name="Trebuchet MS" size="18.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

@@ -37,8 +37,9 @@ public class Authentication {
 
         Query query = session.createQuery("from UserData u where u.username = :user");
         query.setParameter("user", usernameInput);
-
+        
         List<UserData> users = query.list();
+
         transaction.commit();
 
         if(users.size() == 0) return auth;

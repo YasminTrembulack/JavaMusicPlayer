@@ -31,6 +31,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
@@ -71,6 +72,8 @@ public class HomeSceneController {
     public void buildMusicDisplay(HomeSceneController controller, UserData user) {
 
         List<UserCollection> collection = getUserCollectionFromDB(user);
+
+        if(collection == null) return;
 
         for (int i = 0; i < collection.size(); i++) {
 
@@ -164,83 +167,57 @@ public class HomeSceneController {
         ArrayList<MusicData> allMusic = getAllMusics(collection);
 
         for(int i = 0; i < allMusic.size(); i++) {
-            if(allMusic.get(i).equals(getCurrentMusic())) {
+            MusicData music = allMusic.get(i);
+            if(music.getTitle().equals(getCurrentMusic().getTitle())) {
                 index = i;
             }
         }
 
         int music = index;
-        if(index <= allMusic.size() - 1) {
+        if(index < allMusic.size() - 1) {
             music = index + 1;
         } 
 
-        System.out.println(music);
-        System.out.println(allMusic.get(music).getTitle());
         setCurrentMusic(allMusic.get(music));
         setLbTitle(currentMusic.getTitle());
         setLbAlbumAndArtist(currentMusic.getArtist() + " - " + currentMusic.getAlbum());
+
+        File file = new File(currentMusic.getImagePath());
+        Image image = new Image(file.toURI().toString());
+        setIvMusicImage(image);
+
+        MediaPlayer mp = createMediaPlayer(this);
+        setCurrentMusicPlayer(mp);
     }
 
     public void btBackAction(ActionEvent e) {
         int index = 0;
         List<UserCollection> collection = getUserCollectionFromDB(getCurrentUser());
         ArrayList<MusicData> allMusic = getAllMusics(collection);
-        for(MusicData m : allMusic) System.out.println(m.getTitle());
 
         for(int i = 0; i < allMusic.size(); i++) {
-            if(allMusic.get(i).equals(getCurrentMusic())) {
+            MusicData music = allMusic.get(i);
+            if(music.getTitle().equals(getCurrentMusic().getTitle())) {
                 index = i;
             }
         }
 
-        int music = 0;
-        if(index - 1 <= allMusic.size() - 1) {
-            music = index;
-        } 
-        else {
+        int music = index;
+        if(index > 0) {
             music = index - 1;
-        }
+        } 
 
-        System.out.println(music);
-        System.out.println(allMusic.get(music).getTitle());
         setCurrentMusic(allMusic.get(music));
         setLbTitle(currentMusic.getTitle());
         setLbAlbumAndArtist(currentMusic.getArtist() + " - " + currentMusic.getAlbum());
+
+        File file = new File(currentMusic.getImagePath());
+        Image image = new Image(file.toURI().toString());
+        setIvMusicImage(image);
+
+        MediaPlayer mp = createMediaPlayer(this);
+        setCurrentMusicPlayer(mp);
     }
-
-    // public void setButtonsListeners(HomeSceneController controller, List<UserCollection> collection) {
-
-    //     controller.btPlay.setOnMouseClicked(new EventHandler<MouseEvent>() {
-    //         @Override
-    //         public void handle(MouseEvent event) {
-    //             System.out.println("AAAAAAAAAAA CLICKED");
-    //             MediaPlayer mp = controller.getCurrentMusicPlayer();
-   
-    //             if(mp.getStatus() == Status.PLAYING) {
-    //                 mp.pause();
-    //             }
-    //             else if(mp.getStatus() == Status.PAUSED) {
-    //                 mp.play();
-    //             }
-    //         }
-    //     });
-
-    //     controller.btNext.setOnMouseClicked(new EventHandler<MouseEvent>() {
-    //         @Override
-    //         public void handle(MouseEvent event) {
-    //             int index = 0;
-    //             ArrayList<MusicData> allMusic = controller.getAllMusics(collection);
-
-    //             for(int i = 0; i < allMusic.size(); i++) {
-    //                 if(allMusic.get(i).equals(controller.getCurrentMusic())) {
-    //                     index = i;
-    //                 }
-    //             }
-
-    //             controller.setCurrentMusic(allMusic.get(index + 1));
-    //         }
-    //     });
-    // }
 
     public MediaPlayer createMediaPlayer(HomeSceneController controller) {
         try {
@@ -259,18 +236,15 @@ public class HomeSceneController {
     }
 
     public List<UserCollection> getUserCollectionFromDB(UserData user) {
-        // .. create session to consult database ..
         Session session = HibernateUtil
                 .getSessionFactory()
                 .getCurrentSession();
         Transaction transaction = session.beginTransaction();
 
-        // .. gets user collection data from database ..
         Query query = session.createQuery("from UserCollection u where u.userid = :userid");
         query.setParameter("userid", user.getId());
 
         List<UserCollection> l = query.list();
-
         if(l.size() <= 0) {
             System.out.println("Error collecting data from database ;/");
             return null;
@@ -282,13 +256,11 @@ public class HomeSceneController {
     }
 
     public MusicData getMusicFromDB(String musicTitle) {
-        // .. create session to consult database ..
         Session session = HibernateUtil
                 .getSessionFactory()
                 .getCurrentSession();
         Transaction transaction = session.beginTransaction();
 
-        // .. gets user collection data from database ..
         Query query = session.createQuery("from MusicData m where m.title = :musicTitle");
         query.setParameter("musicTitle", musicTitle);
         List<MusicData> music = query.list();
@@ -306,13 +278,11 @@ public class HomeSceneController {
     }
 
     public MusicData getMusicFromDB(Long musicid) {
-        // .. create session to consult database ..
         Session session = HibernateUtil
                 .getSessionFactory()
                 .getCurrentSession();
         Transaction transaction = session.beginTransaction();
 
-        // .. gets user collection data from database ..
         Query query = session.createQuery("from MusicData m where m.id = :musicid");
         query.setParameter("musicid", musicid);
         List<MusicData> music = query.list();
@@ -338,6 +308,69 @@ public class HomeSceneController {
         }
 
         return paths;
+    }
+
+    public void goToAddMusic(ActionEvent e) {
+        Stage crrStage = (Stage) btAddMusic
+                .getScene().getWindow();
+            crrStage.close();
+
+            try {
+                Stage stage = new Stage();
+                Scene scene = MusicRegistrationSceneController.CreateScene(currentUser);
+                stage.setScene(scene);
+                stage.show();
+            } 
+            catch (Exception ex) {
+                Alert alert = new Alert(
+                        AlertType.ERROR,
+                        "Erro ao processar a tela de HOME. Consulte o apoio de TI",
+                        ButtonType.OK);
+                alert.showAndWait();
+                ex.printStackTrace();
+            }
+    }
+
+    public void tryExit(ActionEvent e) {
+        Stage crrStage = (Stage) btAddMusic
+                .getScene().getWindow();
+            crrStage.close();
+
+            try {
+                Stage stage = new Stage();
+                Scene scene = WelcomeSceneController.CreateScene();
+                stage.setScene(scene);
+                stage.show();
+            } 
+            catch (Exception ex) {
+                Alert alert = new Alert(
+                        AlertType.ERROR,
+                        "Erro ao processar a tela de HOME. Consulte o apoio de TI",
+                        ButtonType.OK);
+                alert.showAndWait();
+                ex.printStackTrace();
+            }
+    }
+
+    public void goToDelete(ActionEvent e) {
+        Stage crrStage = (Stage) btAddMusic
+                .getScene().getWindow();
+            crrStage.close();
+
+            try {
+                Stage stage = new Stage();
+                Scene scene = HomeDeleteSceneController.CreateScene();
+                stage.setScene(scene);
+                stage.show();
+            } 
+            catch (Exception ex) {
+                Alert alert = new Alert(
+                        AlertType.ERROR,
+                        "Erro ao processar a tela de HOME. Consulte o apoio de TI",
+                        ButtonType.OK);
+                alert.showAndWait();
+                ex.printStackTrace();
+            }
     }
 
     @FXML
@@ -369,6 +402,15 @@ public class HomeSceneController {
 
     @FXML
     private Label lbUsername;
+
+    @FXML
+    private Button btAddMusic;
+
+    @FXML
+    private Button btExit;
+
+    @FXML
+    private Button btDelete;
 
     private MusicData currentMusic;
 

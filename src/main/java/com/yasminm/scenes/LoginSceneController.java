@@ -37,7 +37,12 @@ public class LoginSceneController {
     protected Button btSubmit;
 
     @FXML
+    protected Button btBackScene;
+
+    @FXML
     protected CheckBox cbPassword;
+    @FXML
+    protected TextField tfPassword;
 
     public String getUsernameInput() {
         return tfUsername.getText();
@@ -50,7 +55,7 @@ public class LoginSceneController {
     public void tryLogin(ActionEvent e) {
         UserData user = Authentication.authenticateUser(
             getUsernameInput(), 
-            getUsernameInput())
+            getPasswordInput())
             .getUser();
 
         if(user != null) {
@@ -82,4 +87,39 @@ public class LoginSceneController {
             return;
         }
     }
+
+    public void togglevisiblePassword(ActionEvent event) {
+        if (cbPassword.isSelected()) {
+            tfPassword.setText(pfPassword.getText());
+            tfPassword.setVisible(true);
+            pfPassword.setVisible(false);
+            return;
+        }
+        pfPassword.setText(tfPassword.getText());
+        pfPassword.setVisible(true);
+        tfPassword.setVisible(false);
+    }
+
+    public void tryBackScene() {
+        try {
+            Stage crrStage = (Stage) btBackScene
+                .getScene().getWindow();
+            crrStage.close();
+
+            Stage stage = new Stage();
+            Scene scene = WelcomeSceneController.CreateScene();
+            stage.setScene(scene);
+            stage.show();
+        } 
+        catch (Exception ex) {
+            Alert alert = new Alert(
+                    AlertType.ERROR,
+                    "Erro ao processar a tela Welcome. Consulte o apoio de TI",
+                    ButtonType.OK);
+            alert.showAndWait();
+            ex.printStackTrace();
+        }
+    }
+
+    
 }

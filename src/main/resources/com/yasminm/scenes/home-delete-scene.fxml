@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="382.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yasminm.scenes.HomeDeleteSceneController">
+   <children>
+      <MenuBar prefHeight="45.0" prefWidth="382.0" />
+      <Label alignment="CENTER" layoutX="92.0" layoutY="1.0" prefHeight="45.0" prefWidth="198.0" text="Delete Music" textAlignment="CENTER" textFill="#4e37e5">
+         <font>
+            <Font name="Impact" size="36.0" />
+         </font>
+      </Label>
+      <ScrollPane layoutX="25.0" layoutY="75.0" prefHeight="420.0" prefWidth="332.0">
+         <content>
+            <VBox id="vbAllMusic" fx:id="vbAllMusic" prefHeight="420.0" prefWidth="316.0" />
+         </content>
+      </ScrollPane>
+      <Button id="btBackScene" fx:id="btBackScene" layoutX="10.0" layoutY="4.0" mnemonicParsing="false" onAction="#tryBackScene" prefHeight="35.0" prefWidth="50.0" style="-fx-background-color: #ffffff; -fx-border-color: #d4d4d4;" text="← " textAlignment="CENTER" textFill="#4e37e5">
+         <font>
+            <Font name="Trebuchet MS" size="18.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
