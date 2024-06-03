@@ -57,8 +57,6 @@ public class HomeSceneController {
         HomeSceneController controller = loader.getController();
         Scene scene = new Scene(root);
 
-        controller.lbUsername.setText(user.getUsername());
-
         controller.setLbUsername(user.getUsername());
         controller.setCurrentUser(user);
         controller.buildMusicDisplay(controller, user);
@@ -197,7 +195,6 @@ public class HomeSceneController {
             music = index - 1;
         } 
 
-        setCurrentMusic(allMusic.get(music));
         // ..sets current music as previous in array..
         selectMusic(allMusic.get(music));
     }
@@ -367,69 +364,6 @@ public class HomeSceneController {
         }
 
         return paths;
-    }
-
-    public void goToAddMusic(ActionEvent e) {
-        Stage crrStage = (Stage) btAddMusic
-                .getScene().getWindow();
-            crrStage.close();
-
-            try {
-                Stage stage = new Stage();
-                Scene scene = MusicRegistrationSceneController.CreateScene(currentUser);
-                stage.setScene(scene);
-                stage.show();
-            } 
-            catch (Exception ex) {
-                Alert alert = new Alert(
-                        AlertType.ERROR,
-                        "Erro ao processar a tela de Add Music. Consulte o apoio de TI",
-                        ButtonType.OK);
-                alert.showAndWait();
-                ex.printStackTrace();
-            }
-    }
-
-    public void tryExit(ActionEvent e) {
-        Stage crrStage = (Stage) btAddMusic
-                .getScene().getWindow();
-            crrStage.close();
-
-            try {
-                Stage stage = new Stage();
-                Scene scene = WelcomeSceneController.CreateScene();
-                stage.setScene(scene);
-                stage.show();
-            } 
-            catch (Exception ex) {
-                Alert alert = new Alert(
-                        AlertType.ERROR,
-                        "Erro ao processar a tela de Welcome. Consulte o apoio de TI",
-                        ButtonType.OK);
-                alert.showAndWait();
-                ex.printStackTrace();
-            }
-    }
-
-    public void goToDelete(ActionEvent e) {
-        Stage crrStage = (Stage) btAddMusic
-                .getScene().getWindow();
-            crrStage.close();
-
-            try {
-                Stage stage = new Stage();
-                Scene scene = HomeDeleteSceneController.CreateScene(currentUser);
-                stage.setScene(scene);
-                stage.show();
-            } 
-            catch (Exception ex) {
-                Alert alert = new Alert(
-                        AlertType.ERROR,
-                        "Erro ao processar a tela de Delete Music. Consulte o apoio de TI",
-                        ButtonType.OK);
-                alert.showAndWait();
-                ex.printStackTrace();
-            }
     }
 
     @FXML
