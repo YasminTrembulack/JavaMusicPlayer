@@ -54,6 +54,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 
+//  //IMAGEM ##########
+//  String imagePath = "C:/Users/disrct/Pictures/Chrysanthemum.jpg";
+//  File file = new File(imagePath);
+//  String fileURL = file.toURI().toURL().toString();
+//  Image image = new Image(fileURL);
+//  controller.displayImage(image);
+
+
 public class HomeSceneController {
     public static Scene CreateScene(UserData user) throws Exception {
         URL sceneUrl = HomeSceneController.class.getResource("home-scene.fxml");
