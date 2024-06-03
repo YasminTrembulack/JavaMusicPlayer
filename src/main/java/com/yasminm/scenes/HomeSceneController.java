@@ -185,6 +185,9 @@ public class HomeSceneController {
         File file = new File(currentMusic.getImagePath());
         Image image = new Image(file.toURI().toString());
         setIvMusicImage(image);
+
+        MediaPlayer mp = createMediaPlayer(this);
+        setCurrentMusicPlayer(mp);
     }
 
     public void btBackAction(ActionEvent e) {
@@ -211,6 +214,9 @@ public class HomeSceneController {
         File file = new File(currentMusic.getImagePath());
         Image image = new Image(file.toURI().toString());
         setIvMusicImage(image);
+
+        MediaPlayer mp = createMediaPlayer(this);
+        setCurrentMusicPlayer(mp);
     }
 
     public MediaPlayer createMediaPlayer(HomeSceneController controller) {
