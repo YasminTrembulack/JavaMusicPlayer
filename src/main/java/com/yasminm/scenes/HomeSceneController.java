@@ -6,27 +6,16 @@ import com.yasminm.model.UserCollection;
 import com.yasminm.util.HibernateUtil;
 
 import javafx.event.EventHandler;
-
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.swing.border.LineBorder;
-
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -34,36 +23,43 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.NodeOrientation;
+
+//  //IMAGEM ##########
+//  String imagePath = "C:/Users/disrct/Pictures/Chrysanthemum.jpg";
+//  File file = new File(imagePath);
+//  String fileURL = file.toURI().toURL().toString();
+//  Image image = new Image(fileURL);
+//  controller.displayImage(image);
+
 
 public class HomeSceneController {
+
     public static Scene CreateScene(UserData user) throws Exception {
         URL sceneUrl = HomeSceneController.class.getResource("home-scene.fxml");
         FXMLLoader loader = new FXMLLoader(sceneUrl);
         Parent root = loader.load();
+
+        // ..creates controller that uses data from user object..
         HomeSceneController controller = loader.getController();
         Scene scene = new Scene(root);
 
         controller.lbUsername.setText(user.getUsername());
 
+        controller.setLbUsername(user.getUsername());
         controller.setCurrentUser(user);
         controller.buildMusicDisplay(controller, user);
         controller.setPaneListeners(controller);
@@ -72,13 +68,11 @@ public class HomeSceneController {
     }
 
     public void buildMusicDisplay(HomeSceneController controller, UserData user) {
-
         List<UserCollection> collection = getUserCollectionFromDB(user);
 
         if(collection == null) return;
 
         for (int i = 0; i < collection.size(); i++) {
-
             MusicData music = getMusicFromDB(collection.get(i).getMusicid());
 
             Pane p = new Pane();
@@ -105,6 +99,8 @@ public class HomeSceneController {
         controller.vbAllMusic.getChildren().forEach(node -> {
             if (node instanceof Pane) {
                 Pane pane = (Pane) node;
+
+                // ..panel hover..
                 pane.setOnMouseMoved(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
@@ -114,6 +110,7 @@ public class HomeSceneController {
                     }
                 });
 
+                // ..panel hover..
                 pane.setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
@@ -121,26 +118,21 @@ public class HomeSceneController {
                     }
                 });
 
+                // ..sets current music when music clicked..
                 pane.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
+                        // ..gets vbox inside pane(music), where its displayed title, album and artist name..
                         ObservableList<Node> inside_vb = pane.getChildren();
                         VBox vb = (VBox) inside_vb.get(0);
 
+                        // ..gets music object from music title label..
                         ObservableList<Node> labels = vb.getChildren();
                         Label musicTitle = (Label) labels.get(0);
                         MusicData music = getMusicFromDB(musicTitle.getText());
 
-                        controller.setCurrentMusic(music);
-                        MediaPlayer mp = createMediaPlayer(controller);
-                        controller.setCurrentMusicPlayer(mp);
-
-                        controller.setLbTitle(music.getTitle());
-                        controller.setLbAlbumAndArtist(music.getArtist() + " - " + music.getAlbum());
-
-                        File file = new File(music.getImagePath());
-                        Image image = new Image(file.toURI().toString());
-                        controller.setIvMusicImage(image);
+                        // ..display music on right side of screen..
+                        selectMusic(music);
                     }
                 });
             }
@@ -168,6 +160,7 @@ public class HomeSceneController {
         List<UserCollection> collection = getUserCollectionFromDB(getCurrentUser());
         ArrayList<MusicData> allMusic = getAllMusics(collection);
 
+        // ..finds music index..
         for(int i = 0; i < allMusic.size(); i++) {
             MusicData music = allMusic.get(i);
             if(music.getTitle().equals(getCurrentMusic().getTitle())) {
@@ -175,18 +168,14 @@ public class HomeSceneController {
             }
         }
 
+        // ..if its the last music, keep it on the last
         int music = index;
         if(index < allMusic.size() - 1) {
             music = index + 1;
         } 
 
-        setCurrentMusic(allMusic.get(music));
-        setLbTitle(currentMusic.getTitle());
-        setLbAlbumAndArtist(currentMusic.getArtist() + " - " + currentMusic.getAlbum());
-
-        File file = new File(currentMusic.getImagePath());
-        Image image = new Image(file.toURI().toString());
-        setIvMusicImage(image);
+        // ..sets current music as next in array..
+        selectMusic(allMusic.get(music));
     }
 
     public void btBackAction(ActionEvent e) {
@@ -194,6 +183,7 @@ public class HomeSceneController {
         List<UserCollection> collection = getUserCollectionFromDB(getCurrentUser());
         ArrayList<MusicData> allMusic = getAllMusics(collection);
 
+        // ..finds music index..
         for(int i = 0; i < allMusic.size(); i++) {
             MusicData music = allMusic.get(i);
             if(music.getTitle().equals(getCurrentMusic().getTitle())) {
@@ -201,18 +191,91 @@ public class HomeSceneController {
             }
         }
 
+        // ..if its the first music, keep it on the first
         int music = index;
         if(index > 0) {
             music = index - 1;
         } 
 
         setCurrentMusic(allMusic.get(music));
+        // ..sets current music as previous in array..
+        selectMusic(allMusic.get(music));
+    }
+
+    public void goToAddMusic(ActionEvent e) {
+        Stage crrStage = (Stage) btAddMusic
+                .getScene().getWindow();
+            crrStage.close();
+
+            try {
+                Stage stage = new Stage();
+                Scene scene = MusicRegistrationSceneController.CreateScene(currentUser);
+                stage.setScene(scene);
+                stage.show();
+            } 
+            catch (Exception ex) {
+                Alert alert = new Alert(
+                        AlertType.ERROR,
+                        "Erro ao processar a tela de HOME. Consulte o apoio de TI",
+                        ButtonType.OK);
+                alert.showAndWait();
+                ex.printStackTrace();
+            }
+    }
+
+    public void tryExit(ActionEvent e) {
+        Stage crrStage = (Stage) btAddMusic
+                .getScene().getWindow();
+            crrStage.close();
+
+            try {
+                Stage stage = new Stage();
+                Scene scene = WelcomeSceneController.CreateScene();
+                stage.setScene(scene);
+                stage.show();
+            } 
+            catch (Exception ex) {
+                Alert alert = new Alert(
+                        AlertType.ERROR,
+                        "Erro ao processar a tela de HOME. Consulte o apoio de TI",
+                        ButtonType.OK);
+                alert.showAndWait();
+                ex.printStackTrace();
+            }
+    }
+
+    public void goToDelete(ActionEvent e) {
+        Stage crrStage = (Stage) btAddMusic
+                .getScene().getWindow();
+            crrStage.close();
+
+            try {
+                Stage stage = new Stage();
+                Scene scene = HomeDeleteSceneController.CreateScene(getCurrentUser());
+                stage.setScene(scene);
+                stage.show();
+            } 
+            catch (Exception ex) {
+                Alert alert = new Alert(
+                        AlertType.ERROR,
+                        "Erro ao processar a tela de HOME. Consulte o apoio de TI",
+                        ButtonType.OK);
+                alert.showAndWait();
+                ex.printStackTrace();
+            }
+    }
+
+    public void selectMusic(MusicData music) {
+        setCurrentMusic(music);
         setLbTitle(currentMusic.getTitle());
         setLbAlbumAndArtist(currentMusic.getArtist() + " - " + currentMusic.getAlbum());
 
         File file = new File(currentMusic.getImagePath());
         Image image = new Image(file.toURI().toString());
         setIvMusicImage(image);
+
+        MediaPlayer mp = createMediaPlayer(this);
+        setCurrentMusicPlayer(mp);
     }
 
     public MediaPlayer createMediaPlayer(HomeSceneController controller) {
@@ -414,34 +477,13 @@ public class HomeSceneController {
 
     private UserData currentUser;
 
-    private Integer currentMusicIndex;
-
-    public Integer getCurrentMusicIndex() {
-        return currentMusicIndex;
-    }
-
-    public void setCurrentMusicIndex(Integer currentMusicIndex) {
-        this.currentMusicIndex = currentMusicIndex;
-    }
-
+    // ---- GETTERS ---- 
     public UserData getCurrentUser() {
         return currentUser;
     }
 
-    public void setCurrentUser(UserData currentUser) {
-        this.currentUser = currentUser;
-    }
-
     public MediaPlayer getCurrentMusicPlayer() {
         return currentMusicPlayer;
-    }
-
-    public void setCurrentMusicPlayer(MediaPlayer currentMusicPlayer) {
-        this.currentMusicPlayer = currentMusicPlayer;
-    }
-
-    public Pane getPnCurrentMusic() {
-        return pnCurrentMusic;
     }
 
     public MusicData getCurrentMusic() {
@@ -456,16 +498,13 @@ public class HomeSceneController {
         return vbAllMusic;
     }
 
-    public Label getLbTitle() {
-        return lbTitle;
+    // ---- SETTERS ---- 
+    public void setCurrentUser(UserData currentUser) {
+        this.currentUser = currentUser;
     }
 
-    public Label getLbAlbumAndArtist() {
-        return lbAlbumAndArtist;
-    }
-
-    public void setLbTitle(Label lbTitle) {
-        this.lbTitle = lbTitle;
+    public void setCurrentMusicPlayer(MediaPlayer currentMusicPlayer) {
+        this.currentMusicPlayer = currentMusicPlayer;
     }
 
     public void setCurrentMusic(MusicData currentMusic) {
@@ -476,10 +515,6 @@ public class HomeSceneController {
         this.ivMusicImage.setImage(img);
     }
 
-    public void setAp(VBox vbAllMusic) {
-        this.vbAllMusic = vbAllMusic;
-    }
-
     public void setLbTitle(String MusicTitle) {
         this.lbTitle.setText(MusicTitle);
     }
@@ -488,44 +523,7 @@ public class HomeSceneController {
         this.lbAlbumAndArtist.setText(lbAlbumAndArtist);
     }
 
-    public ProgressBar getPb() {
-        return pb;
-    }
-
-    public void setPb(ProgressBar pb) {
-        this.pb = pb;
-    }
-
-    public Button getBtPlay() {
-        return btPlay;
-    }
-
-    public void setBtPlay(Button btPlay) {
-        this.btPlay = btPlay;
-    }
-
-    public Button getBtNext() {
-        return btNext;
-    }
-
-    public void setBtNext(Button btNext) {
-        this.btNext = btNext;
-    }
-
-    public Button getBtBack() {
-        return btBack;
-    }
-
-    public void setBtBack(Button btBack) {
-        this.btBack = btBack;
-    }
-
-    public Label getLbUsername() {
-        return lbUsername;
-    }
-
     public void setLbUsername(String lbUsername) {
         this.lbUsername.setText(lbUsername);
     }
-
 }

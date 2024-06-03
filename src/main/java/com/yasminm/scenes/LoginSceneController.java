@@ -1,10 +1,9 @@
 package com.yasminm.scenes;
 
-import java.net.URL;
-
 import com.yasminm.model.UserData;
 import com.yasminm.util.Authentication;
 
+import java.net.URL;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -20,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
 public class LoginSceneController {
+    
     public static Scene CreateScene() throws Exception {
         URL sceneUrl = LoginSceneController.class.getResource("login-scene.fxml");
         Parent root = FXMLLoader.load(sceneUrl);
@@ -41,16 +41,9 @@ public class LoginSceneController {
 
     @FXML
     protected CheckBox cbPassword;
+
     @FXML
     protected TextField tfPassword;
-
-    public String getUsernameInput() {
-        return tfUsername.getText();
-    }
-
-    public String getPasswordInput() {
-        return pfPassword.getText();
-    }
 
     public void tryLogin(ActionEvent e) {
         UserData user = Authentication.authenticateUser(
@@ -121,5 +114,12 @@ public class LoginSceneController {
         }
     }
 
-    
+    // ---- GETTERS ---- 
+    public String getUsernameInput() {
+        return tfUsername.getText();
+    }
+
+    public String getPasswordInput() {
+        return pfPassword.getText();
+    }
 }

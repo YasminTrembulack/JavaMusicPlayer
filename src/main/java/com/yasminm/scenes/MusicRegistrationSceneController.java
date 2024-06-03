@@ -1,17 +1,15 @@
 package com.yasminm.scenes;
 
-import java.net.URL;
-import java.util.List;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import com.yasminm.model.MusicData;
 import com.yasminm.model.UserCollection;
 import com.yasminm.model.UserData;
 import com.yasminm.util.HibernateUtil;
 
+import java.net.URL;
+import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -36,8 +34,6 @@ public class MusicRegistrationSceneController {
 
         return scene;
     }
- 
-    public UserData user;
 
     @FXML
     protected Button btAddMusic;
@@ -60,53 +56,12 @@ public class MusicRegistrationSceneController {
     @FXML
     protected TextField tfTitle;
 
-
-    public String getTfAlbum() {
-        return tfAlbum.getText();
-    }
-
-    public void setTfAlbum(TextField tfAlbum) {
-        this.tfAlbum = tfAlbum;
-    }
-
-    public String getTfArtist() {
-        return tfArtist.getText();
-    }
-
-    public void setTfArtist(TextField tfArtist) {
-        this.tfArtist = tfArtist;
-    }
-
-    public String getTfDirPath() {
-        return tfDirPath.getText();
-    }
-
-    public void setTfDirPath(TextField tfDirPath) {
-        this.tfDirPath = tfDirPath;
-    }
-
-    public String getTfImgPath() {
-        return tfImgPath.getText();
-    }
-
-    public void setTfImgPath(TextField tfImgPath) {
-        this.tfImgPath = tfImgPath;
-    }
-
-    public String getTfTitle() {
-        return tfTitle.getText();
-    }
-
-    public void setTfTitle(TextField tfTitle) {
-        this.tfTitle = tfTitle;
-    }
+    private UserData user;
 
     public void tryAddMusic(){
-
         UserCollection newCollection = new UserCollection();
-        String musicPath = getTfDirPath().replace('\\', '/');
-        String imgPath = getTfImgPath().replace('\\', '/');
-        
+
+        // ..creates object with user input data..
         MusicData newMusic = new MusicData();
         newMusic.setTitle(getTfTitle());
         newMusic.setAlbum(getTfAlbum());
@@ -120,25 +75,14 @@ public class MusicRegistrationSceneController {
                 .getCurrentSession();
         Transaction transaction = session.beginTransaction();
 
+        // ..saves object in db..
         session.save(newMusic);
 
-        transaction.commit();
-
-        session = HibernateUtil
-                .getSessionFactory()
-                .getCurrentSession();
-        transaction = session.beginTransaction();
-
-        Query query = session.createQuery("from MusicData m where m.title = :music_title and m.artist = :music_artist and m.album = :music_album");
-        query.setParameter("music_title", getTfTitle());
-        query.setParameter("music_artist", getTfArtist());
-        query.setParameter("music_album", getTfAlbum());
-
-        List<MusicData> music = query.list();
-
-        newCollection.setMusicid(music.get(0).getId());
+        // ..creates object that associates music with user..
+        newCollection.setMusicid(newMusic.getId());
         newCollection.setUserid(user.getId());
 
+        // ..saves object in db..
         session.save(newCollection);
         
         transaction.commit();
@@ -169,5 +113,26 @@ public class MusicRegistrationSceneController {
             alert.showAndWait();
             ex.printStackTrace();
         }
+    }
+
+    // ---- GETTERS ---- 
+    public String getTfAlbum() {
+        return tfAlbum.getText();
+    }
+
+    public String getTfArtist() {
+        return tfArtist.getText();
+    }
+
+    public String getTfDirPath() {
+        return tfDirPath.getText();
+    }
+
+    public String getTfImgPath() {
+        return tfImgPath.getText();
+    }
+
+    public String getTfTitle() {
+        return tfTitle.getText();
     }
 }

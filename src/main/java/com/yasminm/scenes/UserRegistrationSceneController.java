@@ -4,10 +4,8 @@ import com.yasminm.model.UserData;
 import com.yasminm.util.HibernateUtil;
 
 import java.net.URL;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,13 +14,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
 public class UserRegistrationSceneController {
+    
     public static Scene CreateScene() throws Exception {
         URL sceneUrl = LoginSceneController.class.getResource("user-registration-scene.fxml");
         Parent root = FXMLLoader.load(sceneUrl);
@@ -48,29 +46,8 @@ public class UserRegistrationSceneController {
     @FXML
     protected PasswordField pfConfirmPassword;
 
-
     @FXML
     protected Button btSubmit;
-
-    public String getUsernameInput() {
-        return tfUsername.getText();
-    }
-
-    public String getNameInput() {
-        return tfFullName.getText();
-    }
-
-    public String getEmailInput() {
-        return tfEmail.getText();
-    }
-
-    public String getPasswordInput() {
-        return pfPassword.getText();
-    }
-
-    public String getConfirmPasswordInput() {
-        return pfConfirmPassword.getText();
-    }
 
     public void registerUser(ActionEvent e) {
         String password = getPasswordInput();
@@ -85,21 +62,21 @@ public class UserRegistrationSceneController {
             return;
         }
 
+        // ..creates object user with user input..
         UserData newUser = new UserData();
         newUser.setUsername(getUsernameInput());
         newUser.setName(getNameInput());
         newUser.setEmail(getEmailInput());
         newUser.setPassword(confirmPassword);
-        
 
         Session session = HibernateUtil
                 .getSessionFactory()
                 .getCurrentSession();
         Transaction transaction = session.beginTransaction();
         
+        // ..saves object in db..
         session.save(newUser);
         transaction.commit();
-
         
         try {
             Stage crrStage = (Stage) btSubmit
@@ -140,5 +117,26 @@ public class UserRegistrationSceneController {
             alert.showAndWait();
             ex.printStackTrace();
         }
+    }
+
+    // ---- GETTERS ---- 
+    public String getUsernameInput() {
+        return tfUsername.getText();
+    }
+
+    public String getNameInput() {
+        return tfFullName.getText();
+    }
+
+    public String getEmailInput() {
+        return tfEmail.getText();
+    }
+
+    public String getPasswordInput() {
+        return pfPassword.getText();
+    }
+
+    public String getConfirmPasswordInput() {
+        return pfConfirmPassword.getText();
     }
 }
