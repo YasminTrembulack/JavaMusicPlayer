@@ -1,9 +1,6 @@
 package com.yasminm.scenes;
 
-import java.io.File;
 import java.net.URL;
-
-// import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,7 +28,6 @@ public class WelcomeSceneController {
 
 
     public void goToLogin() {
-
         try {
             Stage crrStage = (Stage) btLogin
                 .getScene().getWindow();
@@ -53,7 +49,6 @@ public class WelcomeSceneController {
     }
 
     public void goToCreateAccount() {
-
         try {
             Stage crrStage = (Stage) btLogin
                 .getScene().getWindow();
