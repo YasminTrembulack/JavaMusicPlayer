@@ -104,13 +104,15 @@ public class MusicRegistrationSceneController {
     public void tryAddMusic(){
 
         UserCollection newCollection = new UserCollection();
-
+        String musicPath = getTfDirPath().replace('\\', '/');
+        String imgPath = getTfImgPath().replace('\\', '/');
+        
         MusicData newMusic = new MusicData();
         newMusic.setTitle(getTfTitle());
         newMusic.setAlbum(getTfAlbum());
         newMusic.setArtist(getTfArtist());
-        newMusic.setDirectoryPath(getTfDirPath());
-        newMusic.setImagePath(getTfImgPath());
+        newMusic.setDirectoryPath(musicPath);
+        newMusic.setImagePath(imgPath);
         
 
         Session session = HibernateUtil

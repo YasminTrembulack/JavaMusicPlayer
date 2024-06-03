@@ -1,6 +1,5 @@
 package com.yasminm.scenes;
 
-
 import com.yasminm.model.UserData;
 import com.yasminm.model.MusicData;
 import com.yasminm.model.UserCollection;
@@ -24,6 +23,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.sql.Delete;
+import org.hibernate.usertype.UserCollectionType;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,6 +39,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -46,7 +48,9 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -89,6 +93,11 @@ public class HomeDeleteSceneController {
 
             Label lbArtist = new Label(music.getArtist() + " - " + music.getAlbum());
 
+            Button btDelete = new Button("X");
+            btDelete.setOnAction(value ->  {
+                controller.DeleteMusic(music.getId());
+             });
+            vb.getChildren().add(btDelete);
             vb.getChildren().add(lbTitle);
             vb.getChildren().add(lbArtist);
 
@@ -96,6 +105,55 @@ public class HomeDeleteSceneController {
 
             controller.vbAllMusic.getChildren().add(p);
         }
+    }
+
+    public void DeleteMusic(Long id){
+        
+        
+        Session session = HibernateUtil
+                .getSessionFactory()
+                .getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("from UserCollection m where m.musicid = :music_id ");
+        query.setParameter("music_id", id);
+        List<UserCollection> userCollection = query.list();
+        System.out.println("AAAAAAAAAA Deletando a musica ");
+        System.out.println(userCollection);
+        session.delete(userCollection.get(0));
+        transaction.commit();
+    
+        session = HibernateUtil
+                .getSessionFactory()
+                .getCurrentSession();
+        transaction = session.beginTransaction();
+
+
+        query = session.createQuery("from MusicData m where m.id = :music_id ");
+        query.setParameter("music_id", id);
+        List<MusicData> music = query.list();
+        session.delete(music.get(0));
+        transaction.commit();
+        
+
+        Stage crrStage = (Stage) btBackScene
+            .getScene().getWindow();
+        crrStage.close();
+
+        try {
+            Stage stage = new Stage();
+            Scene scene = HomeDeleteSceneController.CreateScene(currentUser);
+            stage.setScene(scene);
+            stage.show();
+        } 
+        catch (Exception ex) {
+            Alert alert = new Alert(
+                    AlertType.ERROR,
+                    "Erro ao processar a tela de Delete Music. Consulte o apoio de TI",
+                    ButtonType.OK);
+            alert.showAndWait();
+            ex.printStackTrace();
+        }
+
     }
 
     public void setPaneListeners(HomeDeleteSceneController controller) {
@@ -110,10 +168,30 @@ public class HomeDeleteSceneController {
                         }
                     }
                 });
+
                 pane.setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         pane.setStyle("-fx-background-color: #f0f0f0");
+                    }
+                });
+
+                pane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        ObservableList<Node> inside_vb = pane.getChildren();
+                        VBox vb = (VBox) inside_vb.get(0);
+
+                        // ObservableList<Node> labels = vb.getChildren();
+                        // Label musicTitle = (Label) labels.get(0);
+                        // MusicData music = getMusicFromDB(musicTitle.getText());
+
+                        // controller.setCurrentMusic(music);
+                        // MediaPlayer mp = createMediaPlayer(controller);
+                        // controller.setCurrentMusicPlayer(mp);
+
+                        // controller.setLbTitle(music.getTitle());
+                        // controller.setLbAlbumAndArtist(music.getArtist() + " - " + music.getAlbum());
                     }
                 });
             }
@@ -132,7 +210,7 @@ public class HomeDeleteSceneController {
         query.setParameter("musicid", musicid);
         List<MusicData> music = query.list();
 
-        if(music.size() <= 0) {
+        if (music.size() <= 0) {
             System.out.println("Error collecting data from database ;/");
             return null;
         }
@@ -157,7 +235,7 @@ public class HomeDeleteSceneController {
 
         List<UserCollection> l = query.list();
 
-        if(l.size() <= 0) {
+        if (l.size() <= 0) {
             System.out.println("Error collecting data from database ;/");
             return null;
         }
@@ -167,10 +245,11 @@ public class HomeDeleteSceneController {
         return l;
     }
 
-
     @FXML
     private VBox vbAllMusic;
 
+    @FXML
+    protected Button btBackScene;
 
     private UserData currentUser;
 
@@ -186,5 +265,23 @@ public class HomeDeleteSceneController {
         this.currentUser = currentUser;
     }
 
-    
+    public void tryBackScene() {
+        try {
+            Stage crrStage = (Stage) btBackScene
+                    .getScene().getWindow();
+            crrStage.close();
+
+            Stage stage = new Stage();
+            Scene scene = HomeSceneController.CreateScene(currentUser);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception ex) {
+            Alert alert = new Alert(
+                    AlertType.ERROR,
+                    "Erro ao processar a tela Home. Consulte o apoio de TI",
+                    ButtonType.OK);
+            alert.showAndWait();
+            ex.printStackTrace();
+        }
+    }
 }
