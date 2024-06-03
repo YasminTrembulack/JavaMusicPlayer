@@ -42,7 +42,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -58,6 +61,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
+import javafx.geometry.Pos;
 
 public class HomeDeleteSceneController {
     public static Scene CreateScene(UserData user) throws Exception {
@@ -75,19 +79,18 @@ public class HomeDeleteSceneController {
     }
 
     public void buildMusicDisplay(HomeDeleteSceneController controller, UserData user) {
-
         List<UserCollection> collection = getUserCollectionFromDB(user);
 
         for (int i = 0; i < collection.size(); i++) {
-
             MusicData music = getMusicFromDB(collection.get(i).getMusicid());
 
             Pane p = new Pane();
             p.setPrefSize(615, 84);
 
-            VBox vb = new VBox();
-            vb.setPadding(new Insets(20, 20, 20, 20));
+            HBox hb = new HBox();
+            hb.setPadding(new Insets(20, 20, 20, 20));
 
+            VBox vb = new VBox();
             Label lbTitle = new Label(music.getTitle());
             lbTitle.setStyle("-fx-font-weight: bold");
 
@@ -97,43 +100,39 @@ public class HomeDeleteSceneController {
             btDelete.setOnAction(value ->  {
                 controller.DeleteMusic(music.getId());
              });
-            vb.getChildren().add(btDelete);
+
+            btDelete.setStyle("-fx-margin-left: 5px");
+
             vb.getChildren().add(lbTitle);
             vb.getChildren().add(lbArtist);
 
-            p.getChildren().add(vb);
+            hb.getChildren().add(vb);
+            hb.getChildren().add(btDelete);
+        
+            p.getChildren().add(hb);
 
             controller.vbAllMusic.getChildren().add(p);
         }
     }
 
     public void DeleteMusic(Long id){
-        
-        
         Session session = HibernateUtil
                 .getSessionFactory()
                 .getCurrentSession();
+
         Transaction transaction = session.beginTransaction();
+
         Query query = session.createQuery("from UserCollection m where m.musicid = :music_id ");
         query.setParameter("music_id", id);
         List<UserCollection> userCollection = query.list();
-        System.out.println("AAAAAAAAAA Deletando a musica ");
-        System.out.println(userCollection);
         session.delete(userCollection.get(0));
-        transaction.commit();
-    
-        session = HibernateUtil
-                .getSessionFactory()
-                .getCurrentSession();
-        transaction = session.beginTransaction();
-
 
         query = session.createQuery("from MusicData m where m.id = :music_id ");
         query.setParameter("music_id", id);
         List<MusicData> music = query.list();
-        session.delete(music.get(0));
+        session.delete(music.get(0));   
+
         transaction.commit();
-        
 
         Stage crrStage = (Stage) btBackScene
             .getScene().getWindow();
@@ -173,25 +172,6 @@ public class HomeDeleteSceneController {
                     @Override
                     public void handle(MouseEvent event) {
                         pane.setStyle("-fx-background-color: #f0f0f0");
-                    }
-                });
-
-                pane.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        ObservableList<Node> inside_vb = pane.getChildren();
-                        VBox vb = (VBox) inside_vb.get(0);
-
-                        // ObservableList<Node> labels = vb.getChildren();
-                        // Label musicTitle = (Label) labels.get(0);
-                        // MusicData music = getMusicFromDB(musicTitle.getText());
-
-                        // controller.setCurrentMusic(music);
-                        // MediaPlayer mp = createMediaPlayer(controller);
-                        // controller.setCurrentMusicPlayer(mp);
-
-                        // controller.setLbTitle(music.getTitle());
-                        // controller.setLbAlbumAndArtist(music.getArtist() + " - " + music.getAlbum());
                     }
                 });
             }
@@ -245,26 +225,6 @@ public class HomeDeleteSceneController {
         return l;
     }
 
-    @FXML
-    private VBox vbAllMusic;
-
-    @FXML
-    protected Button btBackScene;
-
-    private UserData currentUser;
-
-    public VBox getVbAllMusic() {
-        return vbAllMusic;
-    }
-
-    public UserData getCurrentUser() {
-        return currentUser;
-    }
-
-    public void setCurrentUser(UserData currentUser) {
-        this.currentUser = currentUser;
-    }
-
     public void tryBackScene() {
         try {
             Stage crrStage = (Stage) btBackScene
@@ -283,5 +243,25 @@ public class HomeDeleteSceneController {
             alert.showAndWait();
             ex.printStackTrace();
         }
+    }
+
+    @FXML
+    private VBox vbAllMusic;
+
+    @FXML
+    protected Button btBackScene;
+
+    private UserData currentUser;
+
+    public VBox getVbAllMusic() {
+        return vbAllMusic;
+    }
+
+    public UserData getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(UserData currentUser) {
+        this.currentUser = currentUser;
     }
 }
