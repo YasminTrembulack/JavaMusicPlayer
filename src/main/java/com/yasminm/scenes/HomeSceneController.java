@@ -133,6 +133,10 @@ public class HomeSceneController {
 
                         controller.setLbTitle(music.getTitle());
                         controller.setLbAlbumAndArtist(music.getArtist() + " - " + music.getAlbum());
+
+                        File file = new File(music.getImagePath());
+                        Image image = new Image(file.toURI().toString());
+                        controller.setIvMusicImage(image);
                     }
                 });
             }
@@ -431,8 +435,8 @@ public class HomeSceneController {
         this.currentMusic = currentMusic;
     }
 
-    public void setIvMusicImage(ImageView ivMusicImage) {
-        this.ivMusicImage = ivMusicImage;
+    public void setIvMusicImage(Image img) {
+        this.ivMusicImage.setImage(img);
     }
 
     public void setAp(VBox vbAllMusic) {
