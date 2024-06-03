@@ -6,6 +6,10 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
+<<<<<<< HEAD
+<?import javafx.scene.layout.VBox?>
+=======
+>>>>>>> yasmiN
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -31,17 +35,17 @@
       <Pane id="pnCurrentMusic" fx:id="pnCurrentMusic" layoutX="377.0" layoutY="75.0" prefHeight="420.0" prefWidth="394.0" style="-fx-background-color: #cfcfcf;">
          <children>
             <ProgressBar id="pbMusicProgress" fx:id="pbMusicProgress" layoutX="23.0" layoutY="283.0" prefHeight="25.0" prefWidth="350.0" progress="0.0" />
-            <Button id="btNext" fx:id="btNext" layoutX="247.0" layoutY="336.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #6452d9;" text="►►" textFill="WHITE">
+            <Button id="btNext" fx:id="btNext" layoutX="247.0" layoutY="336.0" mnemonicParsing="false" onAction="#btNextAction" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #6452d9;" text="►►" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button id="btPlay" fx:id="btPlay" layoutX="174.0" layoutY="336.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="45.0" style="-fx-background-color: #6452d9;" text="►" textFill="WHITE">
+            <Button id="btPlay" fx:id="btPlay" layoutX="174.0" layoutY="336.0" mnemonicParsing="false" onAction="#btPlayAction" prefHeight="39.0" prefWidth="45.0" style="-fx-background-color: #6452d9;" text="►" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button id="btBack" fx:id="btBack" layoutX="87.0" layoutY="336.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="60.0" style="-fx-background-color: #6452d9;" text="◄◄" textFill="WHITE">
+            <Button id="btBack" fx:id="btBack" layoutX="87.0" layoutY="336.0" mnemonicParsing="false" onAction="#btBackAction" prefHeight="39.0" prefWidth="60.0" style="-fx-background-color: #6452d9;" text="◄◄" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -52,7 +56,7 @@
                   <Font name="Trebuchet MS Bold" size="20.0" />
                </font>
             </Label>
-            <Label id="lbArtist" fx:id="lbArtist" alignment="CENTER" layoutX="21.0" layoutY="251.0" prefHeight="27.0" prefWidth="350.0" text="Tulipas- Amarelas">
+            <Label id="lbAlbumAndArtist" fx:id="lbAlbumAndArtist" alignment="CENTER" layoutX="21.0" layoutY="251.0" prefHeight="27.0" prefWidth="350.0" text="Tulipas- Amarelas">
                <font>
                   <Font name="Trebuchet MS" size="16.0" />
                </font>
