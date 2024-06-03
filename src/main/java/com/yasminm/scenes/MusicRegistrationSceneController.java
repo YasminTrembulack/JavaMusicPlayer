@@ -66,8 +66,8 @@ public class MusicRegistrationSceneController {
         newMusic.setTitle(getTfTitle());
         newMusic.setAlbum(getTfAlbum());
         newMusic.setArtist(getTfArtist());
-        newMusic.setDirectoryPath(musicPath);
-        newMusic.setImagePath(imgPath);
+        newMusic.setDirectoryPath(getTfDirPath());
+        newMusic.setImagePath(getTfImgPath());
         
 
         Session session = HibernateUtil
