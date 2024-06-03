@@ -69,5 +69,10 @@
             <Font size="14.0" />
          </font>
       </Button>
+      <Button id="btDelete" fx:id="btDelete" layoutX="179.0" layoutY="6.0" mnemonicParsing="false" onAction="#goToDelete" prefHeight="30.0" prefWidth="107.0" style="-fx-background-color: #6452d9;" text="Delete Music" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

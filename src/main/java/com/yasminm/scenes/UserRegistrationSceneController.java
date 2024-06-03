@@ -90,12 +90,13 @@ public class UserRegistrationSceneController {
         newUser.setName(getNameInput());
         newUser.setEmail(getEmailInput());
         newUser.setPassword(confirmPassword);
+        
 
         Session session = HibernateUtil
                 .getSessionFactory()
                 .getCurrentSession();
         Transaction transaction = session.beginTransaction();
-
+        
         session.save(newUser);
         transaction.commit();
 
