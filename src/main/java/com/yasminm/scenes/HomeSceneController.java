@@ -38,6 +38,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 
+//  //IMAGEM ##########
+//  String imagePath = "C:/Users/disrct/Pictures/Chrysanthemum.jpg";
+//  File file = new File(imagePath);
+//  String fileURL = file.toURI().toURL().toString();
+//  Image image = new Image(fileURL);
+//  controller.displayImage(image);
+
+
 public class HomeSceneController {
 
     public static Scene CreateScene(UserData user) throws Exception {
