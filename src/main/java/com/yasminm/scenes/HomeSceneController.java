@@ -209,40 +209,6 @@ public class HomeSceneController {
         setLbAlbumAndArtist(currentMusic.getArtist() + " - " + currentMusic.getAlbum());
     }
 
-    // public void setButtonsListeners(HomeSceneController controller, List<UserCollection> collection) {
-
-    //     controller.btPlay.setOnMouseClicked(new EventHandler<MouseEvent>() {
-    //         @Override
-    //         public void handle(MouseEvent event) {
-    //             System.out.println("AAAAAAAAAAA CLICKED");
-    //             MediaPlayer mp = controller.getCurrentMusicPlayer();
-   
-    //             if(mp.getStatus() == Status.PLAYING) {
-    //                 mp.pause();
-    //             }
-    //             else if(mp.getStatus() == Status.PAUSED) {
-    //                 mp.play();
-    //             }
-    //         }
-    //     });
-
-    //     controller.btNext.setOnMouseClicked(new EventHandler<MouseEvent>() {
-    //         @Override
-    //         public void handle(MouseEvent event) {
-    //             int index = 0;
-    //             ArrayList<MusicData> allMusic = controller.getAllMusics(collection);
-
-    //             for(int i = 0; i < allMusic.size(); i++) {
-    //                 if(allMusic.get(i).equals(controller.getCurrentMusic())) {
-    //                     index = i;
-    //                 }
-    //             }
-
-    //             controller.setCurrentMusic(allMusic.get(index + 1));
-    //         }
-    //     });
-    // }
-
     public MediaPlayer createMediaPlayer(HomeSceneController controller) {
         try {
             File file = new File(controller.getCurrentMusic().getdirectoryPath());
@@ -341,6 +307,69 @@ public class HomeSceneController {
         return paths;
     }
 
+    public void goToAddMusic(ActionEvent e) {
+        Stage crrStage = (Stage) btAddMusic
+                .getScene().getWindow();
+            crrStage.close();
+
+            try {
+                Stage stage = new Stage();
+                Scene scene = MusicRegistrationSceneController.CreateScene(currentUser);
+                stage.setScene(scene);
+                stage.show();
+            } 
+            catch (Exception ex) {
+                Alert alert = new Alert(
+                        AlertType.ERROR,
+                        "Erro ao processar a tela de HOME. Consulte o apoio de TI",
+                        ButtonType.OK);
+                alert.showAndWait();
+                ex.printStackTrace();
+            }
+    }
+
+    public void tryExit(ActionEvent e) {
+        Stage crrStage = (Stage) btAddMusic
+                .getScene().getWindow();
+            crrStage.close();
+
+            try {
+                Stage stage = new Stage();
+                Scene scene = WelcomeSceneController.CreateScene();
+                stage.setScene(scene);
+                stage.show();
+            } 
+            catch (Exception ex) {
+                Alert alert = new Alert(
+                        AlertType.ERROR,
+                        "Erro ao processar a tela de HOME. Consulte o apoio de TI",
+                        ButtonType.OK);
+                alert.showAndWait();
+                ex.printStackTrace();
+            }
+    }
+
+    public void goToDelete(ActionEvent e) {
+        Stage crrStage = (Stage) btAddMusic
+                .getScene().getWindow();
+            crrStage.close();
+
+            try {
+                Stage stage = new Stage();
+                Scene scene = HomeDeleteSceneController.CreateScene();
+                stage.setScene(scene);
+                stage.show();
+            } 
+            catch (Exception ex) {
+                Alert alert = new Alert(
+                        AlertType.ERROR,
+                        "Erro ao processar a tela de HOME. Consulte o apoio de TI",
+                        ButtonType.OK);
+                alert.showAndWait();
+                ex.printStackTrace();
+            }
+    }
+
     @FXML
     private ImageView ivMusicImage;
 
@@ -370,6 +399,15 @@ public class HomeSceneController {
 
     @FXML
     private Label lbUsername;
+
+    @FXML
+    private Button btAddMusic;
+
+    @FXML
+    private Button btExit;
+
+    @FXML
+    private Button btDelete;
 
     private MusicData currentMusic;
 
