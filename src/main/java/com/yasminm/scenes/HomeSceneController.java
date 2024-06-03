@@ -248,7 +248,7 @@ public class HomeSceneController {
 
             try {
                 Stage stage = new Stage();
-                Scene scene = HomeDeleteSceneController.CreateScene();
+                Scene scene = HomeDeleteSceneController.CreateScene(getCurrentUser());
                 stage.setScene(scene);
                 stage.show();
             } 

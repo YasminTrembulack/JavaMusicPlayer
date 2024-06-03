@@ -167,6 +167,27 @@ public class HomeDeleteSceneController {
         return l;
     }
 
+    public void tryBackScene() {
+        try {
+            Stage crrStage = (Stage) vbAllMusic
+                .getScene().getWindow();
+            crrStage.close();
+
+            Stage stage = new Stage();
+            Scene scene = HomeSceneController.CreateScene(getCurrentUser());
+            stage.setScene(scene);
+            stage.show();
+        } 
+        catch (Exception ex) {
+            Alert alert = new Alert(
+                    AlertType.ERROR,
+                    "Erro ao processar a tela Welcome. Consulte o apoio de TI",
+                    ButtonType.OK);
+            alert.showAndWait();
+            ex.printStackTrace();
+        }
+    }
+
 
     @FXML
     private VBox vbAllMusic;
