@@ -10,7 +10,6 @@ import org.hibernate.Transaction;
 import org.junit.jupiter.api.Test;
 
 import com.yasminm.model.UserData;
-import com.yasminm.scenes.UserRegistrationSceneController;
 import com.yasminm.util.Authentication;
 import com.yasminm.util.HibernateUtil;
 
@@ -19,9 +18,9 @@ import com.yasminm.util.HibernateUtil;
 public class UserRegistrationTest {
  @Test
     public void testAuthenticateUser() {
-        
-         // ---- USER REGISTRATION ---- 
-         Session session = HibernateUtil
+
+        // ---- USER REGISTRATION ---- 
+        Session session = HibernateUtil
                 .getSessionFactory()
                 .getCurrentSession();
 
